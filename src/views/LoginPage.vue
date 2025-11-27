@@ -1,13 +1,13 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-primary-dark via-primary-navy to-primary-green flex items-center justify-center px-4">
+  <div class="min-h-screen bg-neutral-50 flex items-center justify-center px-4">
     <div class="card max-w-md w-full animate-slide-up">
       <div class="text-center mb-8">
         <h1 class="text-3xl font-bold text-primary-dark mb-2">Accedi</h1>
-        <p class="text-gray-600">Benvenuto! Accedi al tuo account</p>
+        <p class="text-neutral-600">Benvenuto! Accedi al tuo account</p>
       </div>
 
       <form @submit.prevent="handleLogin" class="space-y-6">
-        <div v-if="error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+        <div v-if="error" class="bg-error-light/10 border border-error-light text-error-dark px-4 py-3 rounded-lg">
           {{ error }}
         </div>
 
@@ -47,16 +47,16 @@
       </form>
 
       <div class="mt-6 text-center">
-        <p class="text-gray-600">
+        <p class="text-neutral-600">
           Non hai un account? 
-          <router-link to="/register" class="text-primary-navy font-semibold hover:underline">
+          <router-link to="/register" class="text-accent-blue font-semibold hover:text-accent-blue-dark hover:underline">
             Registrati
           </router-link>
         </p>
       </div>
 
       <div class="mt-4 text-center">
-        <router-link to="/" class="text-gray-500 hover:text-gray-700">
+        <router-link to="/" class="text-neutral-500 hover:text-neutral-700 transition-colors">
           ← Torna alla home
         </router-link>
       </div>

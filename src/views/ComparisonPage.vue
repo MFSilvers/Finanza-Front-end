@@ -1,17 +1,17 @@
 <template>
-  <div class="comparison-page min-h-screen bg-gray-50 py-8">
+  <div class="comparison-page min-h-screen bg-neutral-50 py-8">
     <div class="container mx-auto px-4">
       <div class="mb-8">
         <h1 class="text-4xl font-bold text-primary-dark mb-4">Confronto e Esportazione</h1>
         
         <!-- Comparison Filters -->
         <div class="card mb-6">
-          <h3 class="text-xl font-bold mb-4 text-primary-navy">Seleziona Periodi da Confrontare</h3>
+          <h3 class="text-xl font-bold mb-4 text-primary-dark">Seleziona Periodi da Confrontare</h3>
           
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Period 1 -->
-            <div class="border-2 border-blue-200 rounded-lg p-4 bg-blue-50">
-              <h4 class="font-semibold mb-3 text-blue-900">Periodo 1</h4>
+            <div class="border-2 border-accent-blue/30 rounded-lg p-4 bg-accent-blue/5">
+              <h4 class="font-semibold mb-3 text-accent-blue-dark">Periodo 1</h4>
               <div class="space-y-3">
                 <div>
                   <label class="label">Data Inizio</label>
@@ -25,8 +25,8 @@
             </div>
 
             <!-- Period 2 -->
-            <div class="border-2 border-green-200 rounded-lg p-4 bg-green-50">
-              <h4 class="font-semibold mb-3 text-green-900">Periodo 2</h4>
+            <div class="border-2 border-success-light/30 rounded-lg p-4 bg-success-light/5">
+              <h4 class="font-semibold mb-3 text-success-dark">Periodo 2</h4>
               <div class="space-y-3">
                 <div>
                   <label class="label">Data Inizio</label>
@@ -44,11 +44,17 @@
             <button @click="loadComparison" class="btn-primary">
               Confronta Periodi
             </button>
-            <button @click="exportToExcel" class="btn-secondary">
-              📊 Esporta Excel
+            <button @click="exportToExcel" class="btn-secondary flex items-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+              Esporta Excel
             </button>
-            <button @click="exportToPDF" class="btn-secondary">
-              📄 Esporta PDF
+            <button @click="exportToPDF" class="btn-secondary flex items-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              Esporta PDF
             </button>
           </div>
         </div>
@@ -64,18 +70,18 @@
         <!-- Summary Comparison Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div class="card">
-            <h3 class="text-lg font-semibold text-gray-700 mb-4">Saldo</h3>
+            <h3 class="text-lg font-semibold text-neutral-700 mb-4">Saldo</h3>
             <div class="space-y-2">
               <div class="flex justify-between items-center">
-                <span class="text-blue-600">Periodo 1:</span>
-                <span class="font-bold text-xl">€ {{ formatNumber(stats1.balance) }}</span>
+                <span class="text-accent-blue font-medium">Periodo 1:</span>
+                <span class="font-bold text-xl text-primary-dark">€ {{ formatNumber(stats1.balance) }}</span>
               </div>
               <div class="flex justify-between items-center">
-                <span class="text-green-600">Periodo 2:</span>
-                <span class="font-bold text-xl">€ {{ formatNumber(stats2.balance) }}</span>
+                <span class="text-success font-medium">Periodo 2:</span>
+                <span class="font-bold text-xl text-primary-dark">€ {{ formatNumber(stats2.balance) }}</span>
               </div>
-              <div class="border-t pt-2 flex justify-between items-center">
-                <span class="text-gray-600">Differenza:</span>
+              <div class="border-t border-neutral-200 pt-2 flex justify-between items-center">
+                <span class="text-neutral-600">Differenza:</span>
                 <span class="font-bold text-xl" :class="getDifferenceClass(stats2.balance - stats1.balance)">
                   {{ formatDifference(stats2.balance - stats1.balance) }}
                 </span>
@@ -84,18 +90,18 @@
           </div>
 
           <div class="card">
-            <h3 class="text-lg font-semibold text-gray-700 mb-4">Entrate</h3>
+            <h3 class="text-lg font-semibold text-neutral-700 mb-4">Entrate</h3>
             <div class="space-y-2">
               <div class="flex justify-between items-center">
-                <span class="text-blue-600">Periodo 1:</span>
-                <span class="font-bold text-xl">€ {{ formatNumber(stats1.total_income) }}</span>
+                <span class="text-accent-blue font-medium">Periodo 1:</span>
+                <span class="font-bold text-xl text-primary-dark">€ {{ formatNumber(stats1.total_income) }}</span>
               </div>
               <div class="flex justify-between items-center">
-                <span class="text-green-600">Periodo 2:</span>
-                <span class="font-bold text-xl">€ {{ formatNumber(stats2.total_income) }}</span>
+                <span class="text-success font-medium">Periodo 2:</span>
+                <span class="font-bold text-xl text-primary-dark">€ {{ formatNumber(stats2.total_income) }}</span>
               </div>
-              <div class="border-t pt-2 flex justify-between items-center">
-                <span class="text-gray-600">Differenza:</span>
+              <div class="border-t border-neutral-200 pt-2 flex justify-between items-center">
+                <span class="text-neutral-600">Differenza:</span>
                 <span class="font-bold text-xl" :class="getDifferenceClass(stats2.total_income - stats1.total_income)">
                   {{ formatDifference(stats2.total_income - stats1.total_income) }}
                 </span>
@@ -104,18 +110,18 @@
           </div>
 
           <div class="card">
-            <h3 class="text-lg font-semibold text-gray-700 mb-4">Spese</h3>
+            <h3 class="text-lg font-semibold text-neutral-700 mb-4">Spese</h3>
             <div class="space-y-2">
               <div class="flex justify-between items-center">
-                <span class="text-blue-600">Periodo 1:</span>
-                <span class="font-bold text-xl">€ {{ formatNumber(stats1.total_expense) }}</span>
+                <span class="text-accent-blue font-medium">Periodo 1:</span>
+                <span class="font-bold text-xl text-primary-dark">€ {{ formatNumber(stats1.total_expense) }}</span>
               </div>
               <div class="flex justify-between items-center">
-                <span class="text-green-600">Periodo 2:</span>
-                <span class="font-bold text-xl">€ {{ formatNumber(stats2.total_expense) }}</span>
+                <span class="text-success font-medium">Periodo 2:</span>
+                <span class="font-bold text-xl text-primary-dark">€ {{ formatNumber(stats2.total_expense) }}</span>
               </div>
-              <div class="border-t pt-2 flex justify-between items-center">
-                <span class="text-gray-600">Differenza:</span>
+              <div class="border-t border-neutral-200 pt-2 flex justify-between items-center">
+                <span class="text-neutral-600">Differenza:</span>
                 <span class="font-bold text-xl" :class="getDifferenceClass(stats1.total_expense - stats2.total_expense)">
                   {{ formatDifference(stats2.total_expense - stats1.total_expense) }}
                 </span>
@@ -127,14 +133,14 @@
         <!-- Charts Comparison -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div class="card">
-            <h3 class="text-2xl font-bold mb-6 text-blue-600">Periodo 1</h3>
+            <h3 class="text-2xl font-bold mb-6 text-accent-blue">Periodo 1</h3>
             <div class="chart-container" style="height: 350px;">
               <canvas ref="chart1"></canvas>
             </div>
           </div>
 
           <div class="card">
-            <h3 class="text-2xl font-bold mb-6 text-green-600">Periodo 2</h3>
+            <h3 class="text-2xl font-bold mb-6 text-success">Periodo 2</h3>
             <div class="chart-container" style="height: 350px;">
               <canvas ref="chart2"></canvas>
             </div>
@@ -143,7 +149,7 @@
 
         <!-- Combined Chart -->
         <div class="card">
-          <h3 class="text-2xl font-bold mb-6 text-primary-navy">Confronto Entrate vs Spese</h3>
+          <h3 class="text-2xl font-bold mb-6 text-primary-dark">Confronto Entrate vs Spese</h3>
           <div class="chart-container" style="height: 400px;">
             <canvas ref="combinedChart"></canvas>
           </div>
@@ -240,7 +246,7 @@ const formatDifference = (value) => {
 }
 
 const getDifferenceClass = (value) => {
-  return value >= 0 ? 'text-green-600' : 'text-red-600'
+  return value >= 0 ? 'text-success' : 'text-error'
 }
 
 const loadComparison = async () => {
@@ -291,7 +297,7 @@ const renderCharts = () => {
         labels: stats1.value.expenses_by_category.map(c => c.name || 'Altro'),
         datasets: [{
           data: stats1.value.expenses_by_category.map(c => c.total),
-          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+          backgroundColor: ['#2563EB', '#059669', '#DC2626', '#64748B', '#7C3AED', '#EA580C', '#0891B2', '#BE185D']
         }]
       },
       options: {
@@ -313,7 +319,7 @@ const renderCharts = () => {
         labels: stats2.value.expenses_by_category.map(c => c.name || 'Altro'),
         datasets: [{
           data: stats2.value.expenses_by_category.map(c => c.total),
-          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+          backgroundColor: ['#2563EB', '#059669', '#DC2626', '#64748B', '#7C3AED', '#EA580C', '#0891B2', '#BE185D']
         }]
       },
       options: {
@@ -337,12 +343,12 @@ const renderCharts = () => {
           {
             label: 'Periodo 1',
             data: [stats1.value.total_income, stats1.value.total_expense],
-            backgroundColor: '#3B82F6'
+            backgroundColor: '#2563EB'
           },
           {
             label: 'Periodo 2',
             data: [stats2.value.total_income, stats2.value.total_expense],
-            backgroundColor: '#10B981'
+            backgroundColor: '#059669'
           }
         ]
       },

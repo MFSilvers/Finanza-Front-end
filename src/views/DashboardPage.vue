@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-page min-h-screen bg-gray-50 py-8">
+  <div class="dashboard-page min-h-screen bg-neutral-50 py-8">
     <div class="container mx-auto px-4">
       <div class="mb-8">
         <h1 class="text-4xl font-bold text-primary-dark mb-4">Dashboard</h1>
@@ -42,33 +42,45 @@
       <div v-else-if="statistics" class="space-y-8">
         <!-- Summary Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 animate-slide-up">
-          <div class="card bg-gradient-to-br from-green-500 to-green-600 text-white">
+          <div class="card bg-primary-dark text-white border-0">
             <div class="flex items-center justify-between">
               <div>
-                <p class="text-sm opacity-90 mb-1">Saldo Totale</p>
+                <p class="text-sm text-neutral-300 mb-1">Saldo Totale</p>
                 <p class="text-3xl font-bold">€ {{ formatNumber(statistics.balance) }}</p>
               </div>
-              <div class="text-5xl opacity-80">💰</div>
+              <div class="w-12 h-12 bg-accent-blue/20 rounded-lg flex items-center justify-center">
+                <svg class="w-6 h-6 text-accent-blue-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
             </div>
           </div>
 
-          <div class="card bg-gradient-to-br from-blue-500 to-blue-600 text-white">
+          <div class="card bg-white border-l-4 border-l-success">
             <div class="flex items-center justify-between">
               <div>
-                <p class="text-sm opacity-90 mb-1">Entrate Totali</p>
-                <p class="text-3xl font-bold">€ {{ formatNumber(statistics.total_income) }}</p>
+                <p class="text-sm text-neutral-600 mb-1">Entrate Totali</p>
+                <p class="text-3xl font-bold text-success">€ {{ formatNumber(statistics.total_income) }}</p>
               </div>
-              <div class="text-5xl opacity-80">📈</div>
+              <div class="w-12 h-12 bg-success-light/10 rounded-lg flex items-center justify-center">
+                <svg class="w-6 h-6 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+              </div>
             </div>
           </div>
 
-          <div class="card bg-gradient-to-br from-red-500 to-red-600 text-white">
+          <div class="card bg-white border-l-4 border-l-error">
             <div class="flex items-center justify-between">
               <div>
-                <p class="text-sm opacity-90 mb-1">Spese Totali</p>
-                <p class="text-3xl font-bold">€ {{ formatNumber(statistics.total_expense) }}</p>
+                <p class="text-sm text-neutral-600 mb-1">Spese Totali</p>
+                <p class="text-3xl font-bold text-error">€ {{ formatNumber(statistics.total_expense) }}</p>
               </div>
-              <div class="text-5xl opacity-80">📉</div>
+              <div class="w-12 h-12 bg-error-light/10 rounded-lg flex items-center justify-center">
+                <svg class="w-6 h-6 text-error" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6 6" />
+                </svg>
+              </div>
             </div>
           </div>
         </div>
@@ -76,12 +88,12 @@
         <!-- Average Cards -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="card">
-            <h3 class="text-lg font-semibold text-gray-700 mb-2">Media Mensile Entrate</h3>
-            <p class="text-2xl font-bold text-blue-600">€ {{ formatNumber(statistics.average_monthly_income) }}</p>
+            <h3 class="text-lg font-semibold text-neutral-700 mb-2">Media Mensile Entrate</h3>
+            <p class="text-2xl font-bold text-success">€ {{ formatNumber(statistics.average_monthly_income) }}</p>
           </div>
           <div class="card">
-            <h3 class="text-lg font-semibold text-gray-700 mb-2">Media Mensile Spese</h3>
-            <p class="text-2xl font-bold text-red-600">€ {{ formatNumber(statistics.average_monthly_expense) }}</p>
+            <h3 class="text-lg font-semibold text-neutral-700 mb-2">Media Mensile Spese</h3>
+            <p class="text-2xl font-bold text-error">€ {{ formatNumber(statistics.average_monthly_expense) }}</p>
           </div>
         </div>
 
@@ -89,7 +101,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <!-- Expenses by Category -->
           <div class="card">
-            <h3 class="text-2xl font-bold mb-6 text-primary-navy">Spese per Categoria</h3>
+            <h3 class="text-2xl font-bold mb-6 text-primary-dark">Spese per Categoria</h3>
             <div class="chart-container" style="height: 350px;">
               <canvas ref="expensesCategoryChart"></canvas>
             </div>
@@ -97,7 +109,7 @@
 
           <!-- Income by Category -->
           <div class="card">
-            <h3 class="text-2xl font-bold mb-6 text-primary-navy">Entrate per Categoria</h3>
+            <h3 class="text-2xl font-bold mb-6 text-primary-dark">Entrate per Categoria</h3>
             <div class="chart-container" style="height: 350px;">
               <canvas ref="incomeCategoryChart"></canvas>
             </div>
@@ -106,7 +118,7 @@
 
         <!-- Monthly Trends -->
         <div class="card">
-          <h3 class="text-2xl font-bold mb-6 text-primary-navy">Andamento Mensile</h3>
+          <h3 class="text-2xl font-bold mb-6 text-primary-dark">Andamento Mensile</h3>
           <div class="chart-container" style="height: 400px;">
             <canvas ref="trendsChart"></canvas>
           </div>
@@ -115,8 +127,8 @@
         <!-- Recent Transactions -->
         <div class="card">
           <div class="flex justify-between items-center mb-6">
-            <h3 class="text-2xl font-bold text-primary-navy">Transazioni Recenti</h3>
-            <router-link to="/transactions" class="text-primary-navy hover:underline">
+            <h3 class="text-2xl font-bold text-primary-dark">Transazioni Recenti</h3>
+            <router-link to="/transactions" class="text-accent-blue hover:text-accent-blue-dark font-medium">
               Vedi tutte →
             </router-link>
           </div>
@@ -134,16 +146,16 @@
                 <tr 
                   v-for="transaction in statistics.recent_transactions" 
                   :key="transaction.id"
-                  class="border-b hover:bg-gray-50 transition"
+                  class="border-b hover:bg-neutral-50 transition"
                 >
                   <td class="py-3 px-4">{{ formatDate(transaction.date) }}</td>
                   <td class="py-3 px-4">{{ transaction.description || '-' }}</td>
                   <td class="py-3 px-4">
-                    <span class="px-2 py-1 rounded text-sm" :class="transaction.type === 'income' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'">
+                    <span class="px-2 py-1 rounded text-sm font-medium" :class="transaction.type === 'income' ? 'bg-success-light/10 text-success-dark' : 'bg-error-light/10 text-error-dark'">
                       {{ transaction.category_name || 'Altro' }}
                     </span>
                   </td>
-                  <td class="py-3 px-4 text-right font-semibold" :class="transaction.type === 'income' ? 'text-green-600' : 'text-red-600'">
+                  <td class="py-3 px-4 text-right font-semibold" :class="transaction.type === 'income' ? 'text-success' : 'text-error'">
                     {{ transaction.type === 'income' ? '+' : '-' }}€ {{ formatNumber(transaction.amount) }}
                   </td>
                 </tr>
@@ -231,8 +243,8 @@ const renderCharts = () => {
         datasets: [{
           data: statistics.value.expenses_by_category.map(c => c.total),
           backgroundColor: [
-            '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
-            '#FF9F40', '#FF6384', '#C9CBCF', '#4BC0C0', '#FF6384'
+            '#2563EB', '#059669', '#DC2626', '#64748B', '#7C3AED',
+            '#EA580C', '#0891B2', '#BE185D', '#475569', '#0F172A'
           ]
         }]
       },
@@ -257,7 +269,7 @@ const renderCharts = () => {
         datasets: [{
           label: 'Entrate',
           data: statistics.value.income_by_category.map(c => c.total),
-          backgroundColor: '#10B981'
+          backgroundColor: '#059669'
         }]
       },
       options: {
@@ -287,16 +299,16 @@ const renderCharts = () => {
           {
             label: 'Entrate',
             data: statistics.value.monthly_trends.map(t => t.income),
-            borderColor: '#10B981',
-            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+            borderColor: '#059669',
+            backgroundColor: 'rgba(5, 150, 105, 0.1)',
             tension: 0.4,
             fill: true
           },
           {
             label: 'Spese',
             data: statistics.value.monthly_trends.map(t => t.expense),
-            borderColor: '#EF4444',
-            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+            borderColor: '#DC2626',
+            backgroundColor: 'rgba(220, 38, 38, 0.1)',
             tension: 0.4,
             fill: true
           }
