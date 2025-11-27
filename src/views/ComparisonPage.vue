@@ -1,14 +1,14 @@
 <template>
-  <div class="comparison-page min-h-screen bg-gradient-to-br from-neutral-900 via-neutral-800 to-primary-dark py-8">
-    <div class="container mx-auto px-4">
-      <div class="mb-8">
-        <h1 class="text-4xl font-bold text-white mb-4">Confronto e Esportazione</h1>
+  <div class="comparison-page min-h-screen bg-gradient-to-br from-neutral-900 via-neutral-800 to-primary-dark py-4 md:py-8">
+    <div class="container mx-auto px-3 md:px-4">
+      <div class="mb-6 md:mb-8">
+        <h1 class="text-2xl md:text-4xl font-bold text-white mb-4">Confronto e Esportazione</h1>
         
         <!-- Comparison Filters -->
-        <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl mb-6">
-          <h3 class="text-xl font-bold mb-4 text-white">Seleziona Periodi da Confrontare</h3>
+        <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-4 md:p-6 shadow-xl mb-6">
+          <h3 class="text-lg md:text-xl font-bold mb-4 text-white">Seleziona Periodi da Confrontare</h3>
           
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             <!-- Period 1 -->
             <div class="border-2 border-accent-blue/30 rounded-lg p-4 bg-accent-blue/10">
               <h4 class="font-semibold mb-3 text-accent-blue-light">Periodo 1</h4>
@@ -40,21 +40,23 @@
             </div>
           </div>
 
-          <div class="flex gap-4 mt-6">
-            <button @click="loadComparison" class="btn-primary">
+          <div class="flex flex-col sm:flex-row gap-3 md:gap-4 mt-4 md:mt-6">
+            <button @click="loadComparison" class="btn-primary flex-1 sm:flex-none text-sm md:text-base">
               Confronta Periodi
             </button>
-            <button @click="exportToExcel" class="btn-secondary flex items-center gap-2">
+            <button @click="exportToExcel" class="btn-secondary flex items-center justify-center gap-2 flex-1 sm:flex-none text-sm md:text-base">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
               </svg>
-              Esporta Excel
+              <span class="hidden sm:inline">Esporta Excel</span>
+              <span class="sm:hidden">Excel</span>
             </button>
-            <button @click="exportToPDF" class="btn-secondary flex items-center gap-2">
+            <button @click="exportToPDF" class="btn-secondary flex items-center justify-center gap-2 flex-1 sm:flex-none text-sm md:text-base">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
-              Esporta PDF
+              <span class="hidden sm:inline">Esporta PDF</span>
+              <span class="sm:hidden">PDF</span>
             </button>
           </div>
         </div>
@@ -68,29 +70,29 @@
       <!-- Comparison Results -->
       <div v-else-if="stats1 && stats2" class="space-y-6">
         <!-- Summary Comparison Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl">
-            <h3 class="text-lg font-semibold text-neutral-300 mb-4">Saldo</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-4 md:p-6 shadow-xl">
+            <h3 class="text-base md:text-lg font-semibold text-neutral-300 mb-3 md:mb-4">Saldo</h3>
             <div class="space-y-2">
-              <div class="flex justify-between items-center">
+              <div class="flex justify-between items-center text-sm md:text-base">
                 <span class="text-accent-blue-light font-medium">Periodo 1:</span>
-                <span class="font-bold text-xl text-white">€ {{ formatNumber(stats1.balance) }}</span>
+                <span class="font-bold text-lg md:text-xl text-white">€ {{ formatNumber(stats1.balance) }}</span>
               </div>
-              <div class="flex justify-between items-center">
+              <div class="flex justify-between items-center text-sm md:text-base">
                 <span class="text-success-light font-medium">Periodo 2:</span>
-                <span class="font-bold text-xl text-white">€ {{ formatNumber(stats2.balance) }}</span>
+                <span class="font-bold text-lg md:text-xl text-white">€ {{ formatNumber(stats2.balance) }}</span>
               </div>
-              <div class="border-t border-neutral-700 pt-2 flex justify-between items-center">
+              <div class="border-t border-neutral-700 pt-2 flex justify-between items-center text-sm md:text-base">
                 <span class="text-neutral-300">Differenza:</span>
-                <span class="font-bold text-xl" :class="getDifferenceClass(stats2.balance - stats1.balance)">
+                <span class="font-bold text-lg md:text-xl" :class="getDifferenceClass(stats2.balance - stats1.balance)">
                   {{ formatDifference(stats2.balance - stats1.balance) }}
                 </span>
               </div>
             </div>
           </div>
 
-          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl">
-            <h3 class="text-lg font-semibold text-neutral-300 mb-4">Entrate</h3>
+          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-4 md:p-6 shadow-xl">
+            <h3 class="text-base md:text-lg font-semibold text-neutral-300 mb-3 md:mb-4">Entrate</h3>
             <div class="space-y-2">
               <div class="flex justify-between items-center">
                 <span class="text-accent-blue-light font-medium">Periodo 1:</span>
@@ -109,8 +111,8 @@
             </div>
           </div>
 
-          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl">
-            <h3 class="text-lg font-semibold text-neutral-300 mb-4">Spese</h3>
+          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-4 md:p-6 shadow-xl">
+            <h3 class="text-base md:text-lg font-semibold text-neutral-300 mb-3 md:mb-4">Spese</h3>
             <div class="space-y-2">
               <div class="flex justify-between items-center">
                 <span class="text-accent-blue-light font-medium">Periodo 1:</span>
@@ -131,26 +133,26 @@
         </div>
 
         <!-- Charts Comparison -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl">
-            <h3 class="text-2xl font-bold mb-6 text-accent-blue-light">Periodo 1</h3>
-            <div class="chart-container" style="height: 350px;">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
+          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-4 md:p-6 shadow-xl">
+            <h3 class="text-lg md:text-2xl font-bold mb-4 md:mb-6 text-accent-blue-light">Periodo 1</h3>
+            <div class="chart-container" style="height: 280px; md:height: 350px;">
               <canvas ref="chart1"></canvas>
             </div>
           </div>
 
-          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl">
-            <h3 class="text-2xl font-bold mb-6 text-success-light">Periodo 2</h3>
-            <div class="chart-container" style="height: 350px;">
+          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-4 md:p-6 shadow-xl">
+            <h3 class="text-lg md:text-2xl font-bold mb-4 md:mb-6 text-success-light">Periodo 2</h3>
+            <div class="chart-container" style="height: 280px; md:height: 350px;">
               <canvas ref="chart2"></canvas>
             </div>
           </div>
         </div>
 
         <!-- Combined Chart -->
-        <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl">
-          <h3 class="text-2xl font-bold mb-6 text-white">Confronto Entrate vs Spese</h3>
-          <div class="chart-container" style="height: 400px;">
+        <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-4 md:p-6 shadow-xl">
+          <h3 class="text-lg md:text-2xl font-bold mb-4 md:mb-6 text-white">Confronto Entrate vs Spese</h3>
+          <div class="chart-container" style="height: 300px; md:height: 400px;">
             <canvas ref="combinedChart"></canvas>
           </div>
         </div>

@@ -1,34 +1,36 @@
 <template>
-  <div class="dashboard-page min-h-screen bg-gradient-to-br from-neutral-900 via-neutral-800 to-primary-dark py-8">
-    <div class="container mx-auto px-4">
-      <div class="mb-8">
-        <h1 class="text-4xl font-bold text-white mb-4">Dashboard</h1>
+  <div class="dashboard-page min-h-screen bg-gradient-to-br from-neutral-900 via-neutral-800 to-primary-dark py-4 md:py-8">
+    <div class="container mx-auto px-3 md:px-4">
+      <div class="mb-6 md:mb-8">
+        <h1 class="text-2xl md:text-4xl font-bold text-white mb-4">Dashboard</h1>
         
         <!-- Date Filter -->
-        <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl mb-6">
-          <div class="flex flex-col md:flex-row gap-4 items-end">
-            <div class="flex-1">
+        <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-4 md:p-6 shadow-xl mb-6">
+          <div class="flex flex-col md:flex-row gap-3 md:gap-4 md:items-end">
+            <div class="flex-1 w-full">
               <label class="block text-sm font-medium text-neutral-300 mb-2">Data Inizio</label>
               <input 
                 v-model="filters.startDate" 
                 type="date" 
-                class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white"
+                class="w-full px-3 md:px-4 py-2 md:py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white text-sm md:text-base"
               />
             </div>
-            <div class="flex-1">
+            <div class="flex-1 w-full">
               <label class="block text-sm font-medium text-neutral-300 mb-2">Data Fine</label>
               <input 
                 v-model="filters.endDate" 
                 type="date" 
-                class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white"
+                class="w-full px-3 md:px-4 py-2 md:py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white text-sm md:text-base"
               />
             </div>
-            <button @click="applyFilters" class="btn-primary">
-              Applica Filtro
-            </button>
-            <button @click="clearFilters" class="btn-secondary">
-              Reset
-            </button>
+            <div class="flex gap-2 w-full md:w-auto">
+              <button @click="applyFilters" class="btn-primary flex-1 md:flex-none text-sm md:text-base">
+                Applica
+              </button>
+              <button @click="clearFilters" class="btn-secondary flex-1 md:flex-none text-sm md:text-base">
+                Reset
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -41,12 +43,12 @@
       <!-- Statistics Cards -->
       <div v-else-if="statistics" class="space-y-8">
         <!-- Summary Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 animate-slide-up">
-          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 text-white shadow-xl">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 animate-slide-up">
+          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-4 md:p-6 text-white shadow-xl">
             <div class="flex items-center justify-between">
-              <div>
-                <p class="text-sm text-neutral-300 mb-1">Saldo Totale</p>
-                <p class="text-3xl font-bold text-white">€ {{ formatNumber(statistics.balance) }}</p>
+              <div class="flex-1">
+                <p class="text-xs md:text-sm text-neutral-300 mb-1">Saldo Totale</p>
+                <p class="text-2xl md:text-3xl font-bold text-white">€ {{ formatNumber(statistics.balance) }}</p>
               </div>
               <div class="w-12 h-12 bg-accent-blue/20 rounded-lg flex items-center justify-center">
                 <svg class="w-6 h-6 text-accent-blue-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -56,11 +58,11 @@
             </div>
           </div>
 
-          <div class="bg-neutral-800/80 backdrop-blur-sm border-l-4 border-l-success border border-neutral-700 rounded-lg p-6 shadow-xl">
+          <div class="bg-neutral-800/80 backdrop-blur-sm border-l-4 border-l-success border border-neutral-700 rounded-lg p-4 md:p-6 shadow-xl">
             <div class="flex items-center justify-between">
-              <div>
-                <p class="text-sm text-neutral-300 mb-1">Entrate Totali</p>
-                <p class="text-3xl font-bold text-success-light">€ {{ formatNumber(statistics.total_income) }}</p>
+              <div class="flex-1">
+                <p class="text-xs md:text-sm text-neutral-300 mb-1">Entrate Totali</p>
+                <p class="text-2xl md:text-3xl font-bold text-success-light">€ {{ formatNumber(statistics.total_income) }}</p>
               </div>
               <div class="w-12 h-12 bg-success-light/20 rounded-lg flex items-center justify-center">
                 <svg class="w-6 h-6 text-success-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -70,11 +72,11 @@
             </div>
           </div>
 
-          <div class="bg-neutral-800/80 backdrop-blur-sm border-l-4 border-l-error border border-neutral-700 rounded-lg p-6 shadow-xl">
+          <div class="bg-neutral-800/80 backdrop-blur-sm border-l-4 border-l-error border border-neutral-700 rounded-lg p-4 md:p-6 shadow-xl sm:col-span-2 md:col-span-1">
             <div class="flex items-center justify-between">
-              <div>
-                <p class="text-sm text-neutral-300 mb-1">Spese Totali</p>
-                <p class="text-3xl font-bold text-error-light">€ {{ formatNumber(statistics.total_expense) }}</p>
+              <div class="flex-1">
+                <p class="text-xs md:text-sm text-neutral-300 mb-1">Spese Totali</p>
+                <p class="text-2xl md:text-3xl font-bold text-error-light">€ {{ formatNumber(statistics.total_expense) }}</p>
               </div>
               <div class="w-12 h-12 bg-error-light/20 rounded-lg flex items-center justify-center">
                 <svg class="w-6 h-6 text-error-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -98,24 +100,24 @@
         </div>
 
         <!-- Charts -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
           <!-- Expenses by Category -->
-          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl">
-            <h3 class="text-2xl font-bold mb-6 text-white">Spese per Categoria</h3>
-            <div class="chart-container" style="height: 350px;">
+          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-4 md:p-6 shadow-xl">
+            <h3 class="text-lg md:text-2xl font-bold mb-4 md:mb-6 text-white">Spese per Categoria</h3>
+            <div class="chart-container" style="height: 280px; md:height: 350px;">
               <canvas ref="expensesCategoryChart"></canvas>
-              <div v-if="!statistics?.expenses_by_category || statistics.expenses_by_category.length === 0" class="flex items-center justify-center h-full text-neutral-400">
+              <div v-if="!statistics?.expenses_by_category || statistics.expenses_by_category.length === 0" class="flex items-center justify-center h-full text-neutral-400 text-sm md:text-base">
                 <p>Nessun dato disponibile per le spese</p>
               </div>
             </div>
           </div>
 
           <!-- Income by Category -->
-          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl">
-            <h3 class="text-2xl font-bold mb-6 text-white">Entrate per Categoria</h3>
-            <div class="chart-container" style="height: 350px;">
+          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-4 md:p-6 shadow-xl">
+            <h3 class="text-lg md:text-2xl font-bold mb-4 md:mb-6 text-white">Entrate per Categoria</h3>
+            <div class="chart-container" style="height: 280px; md:height: 350px;">
               <canvas ref="incomeCategoryChart"></canvas>
-              <div v-if="!statistics?.income_by_category || statistics.income_by_category.length === 0" class="flex items-center justify-center h-full text-neutral-400">
+              <div v-if="!statistics?.income_by_category || statistics.income_by_category.length === 0" class="flex items-center justify-center h-full text-neutral-400 text-sm md:text-base">
                 <p>Nessun dato disponibile per le entrate</p>
               </div>
             </div>
@@ -123,53 +125,75 @@
         </div>
 
         <!-- Monthly Trends -->
-        <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl">
-          <h3 class="text-2xl font-bold mb-6 text-white">Andamento Mensile</h3>
-          <div class="chart-container" style="height: 400px;">
+        <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-4 md:p-6 shadow-xl">
+          <h3 class="text-lg md:text-2xl font-bold mb-4 md:mb-6 text-white">Andamento Mensile</h3>
+          <div class="chart-container" style="height: 300px; md:height: 400px;">
             <canvas ref="trendsChart"></canvas>
-            <div v-if="!statistics?.monthly_trends || statistics.monthly_trends.length === 0" class="flex items-center justify-center h-full text-neutral-400">
+            <div v-if="!statistics?.monthly_trends || statistics.monthly_trends.length === 0" class="flex items-center justify-center h-full text-neutral-400 text-sm md:text-base">
               <p>Nessun dato disponibile per i trend mensili</p>
             </div>
           </div>
         </div>
 
         <!-- Recent Transactions -->
-        <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl">
-          <div class="flex justify-between items-center mb-6">
-            <h3 class="text-2xl font-bold text-white">Transazioni Recenti</h3>
-            <router-link to="/transactions" class="text-accent-blue-light hover:text-accent-blue font-medium transition-colors">
+        <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-4 md:p-6 shadow-xl">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 md:mb-6 gap-2">
+            <h3 class="text-lg md:text-2xl font-bold text-white">Transazioni Recenti</h3>
+            <router-link to="/transactions" class="text-accent-blue-light hover:text-accent-blue font-medium transition-colors text-sm md:text-base">
               Vedi tutte →
             </router-link>
           </div>
-          <div class="overflow-x-auto">
-            <table class="w-full">
-              <thead>
-                <tr class="border-b border-neutral-700">
-                  <th class="text-left py-3 px-4 text-neutral-300 font-semibold">Data</th>
-                  <th class="text-left py-3 px-4 text-neutral-300 font-semibold">Descrizione</th>
-                  <th class="text-left py-3 px-4 text-neutral-300 font-semibold">Categoria</th>
-                  <th class="text-right py-3 px-4 text-neutral-300 font-semibold">Importo</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr 
+          <div class="overflow-x-auto -mx-4 md:mx-0">
+            <div class="min-w-full px-4 md:px-0">
+              <!-- Mobile Card View -->
+              <div class="md:hidden space-y-3">
+                <div 
                   v-for="transaction in statistics.recent_transactions" 
                   :key="transaction.id"
-                  class="border-b border-neutral-700 hover:bg-neutral-700/30 transition"
+                  class="bg-neutral-700/30 rounded-lg p-3 border border-neutral-600"
                 >
-                  <td class="py-3 px-4 text-neutral-300">{{ formatDate(transaction.date) }}</td>
-                  <td class="py-3 px-4 text-neutral-300">{{ transaction.description || '-' }}</td>
-                  <td class="py-3 px-4">
-                    <span class="px-2 py-1 rounded text-sm font-medium" :class="transaction.type === 'income' ? 'bg-success-light/20 text-success-light' : 'bg-error-light/20 text-error-light'">
+                  <div class="flex justify-between items-start mb-2">
+                    <span class="text-xs text-neutral-400">{{ formatDate(transaction.date) }}</span>
+                    <span class="px-2 py-1 rounded text-xs font-medium" :class="transaction.type === 'income' ? 'bg-success-light/20 text-success-light' : 'bg-error-light/20 text-error-light'">
                       {{ transaction.category_name || 'Altro' }}
                     </span>
-                  </td>
-                  <td class="py-3 px-4 text-right font-semibold" :class="transaction.type === 'income' ? 'text-success-light' : 'text-error-light'">
+                  </div>
+                  <p class="text-sm text-neutral-300 mb-1">{{ transaction.description || '-' }}</p>
+                  <p class="text-lg font-bold" :class="transaction.type === 'income' ? 'text-success-light' : 'text-error-light'">
                     {{ transaction.type === 'income' ? '+' : '-' }}€ {{ formatNumber(transaction.amount) }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                  </p>
+                </div>
+              </div>
+              <!-- Desktop Table View -->
+              <table class="hidden md:table w-full">
+                <thead>
+                  <tr class="border-b border-neutral-700">
+                    <th class="text-left py-3 px-4 text-neutral-300 font-semibold text-sm">Data</th>
+                    <th class="text-left py-3 px-4 text-neutral-300 font-semibold text-sm">Descrizione</th>
+                    <th class="text-left py-3 px-4 text-neutral-300 font-semibold text-sm">Categoria</th>
+                    <th class="text-right py-3 px-4 text-neutral-300 font-semibold text-sm">Importo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr 
+                    v-for="transaction in statistics.recent_transactions" 
+                    :key="transaction.id"
+                    class="border-b border-neutral-700 hover:bg-neutral-700/30 transition"
+                  >
+                    <td class="py-3 px-4 text-neutral-300 text-sm">{{ formatDate(transaction.date) }}</td>
+                    <td class="py-3 px-4 text-neutral-300 text-sm">{{ transaction.description || '-' }}</td>
+                    <td class="py-3 px-4">
+                      <span class="px-2 py-1 rounded text-xs font-medium" :class="transaction.type === 'income' ? 'bg-success-light/20 text-success-light' : 'bg-error-light/20 text-error-light'">
+                        {{ transaction.category_name || 'Altro' }}
+                      </span>
+                    </td>
+                    <td class="py-3 px-4 text-right font-semibold text-sm" :class="transaction.type === 'income' ? 'text-success-light' : 'text-error-light'">
+                      {{ transaction.type === 'income' ? '+' : '-' }}€ {{ formatNumber(transaction.amount) }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -209,19 +233,31 @@ const formatDate = (date) => {
   return new Date(date).toLocaleDateString('it-IT')
 }
 
-const waitForCanvas = (ref, maxAttempts = 20, delay = 100) => {
+const waitForCanvas = (ref, maxAttempts = 30, delay = 50) => {
   return new Promise((resolve, reject) => {
     let attempts = 0
     const checkCanvas = () => {
       attempts++
-      if (ref.value) {
+      if (ref.value && ref.value.offsetParent !== null) {
         console.log(`✅ [Dashboard] Canvas trovato dopo ${attempts} tentativi`)
         resolve(ref.value)
       } else if (attempts >= maxAttempts) {
-        console.warn(`⚠️ [Dashboard] Canvas non trovato dopo ${maxAttempts} tentativi`)
-        reject(new Error('Canvas non disponibile'))
+        console.warn(`⚠️ [Dashboard] Canvas non trovato dopo ${maxAttempts} tentativi`, {
+          refExists: !!ref.value,
+          isVisible: ref.value?.offsetParent !== null
+        })
+        // Prova comunque a risolvere se il ref esiste, anche se non è visibile
+        if (ref.value) {
+          console.log('⚠️ [Dashboard] Canvas esiste ma potrebbe non essere visibile, procedo comunque')
+          resolve(ref.value)
+        } else {
+          reject(new Error('Canvas non disponibile'))
+        }
       } else {
-        setTimeout(checkCanvas, delay)
+        // Usa requestAnimationFrame per aspettare il prossimo frame di rendering
+        requestAnimationFrame(() => {
+          setTimeout(checkCanvas, delay)
+        })
       }
     }
     checkCanvas()
@@ -239,18 +275,27 @@ const loadStatistics = async () => {
     console.log('📈 [Dashboard] Income by category:', statistics.value?.income_by_category)
     console.log('📈 [Dashboard] Monthly trends:', statistics.value?.monthly_trends)
     
-    // Aspetta che il DOM sia aggiornato
+    // Aspetta che il DOM sia aggiornato - usa multiple nextTick per assicurarsi
+    await nextTick()
     await nextTick()
     console.log('⏳ [Dashboard] NextTick completato, attesa canvas...')
     
+    // Usa requestAnimationFrame per aspettare che il browser completi il rendering
+    await new Promise(resolve => requestAnimationFrame(resolve))
+    await new Promise(resolve => setTimeout(resolve, 100))
+    
     // Aspetta che i canvas siano disponibili nel DOM
     try {
-      await Promise.all([
-        waitForCanvas(expensesCategoryChart).catch(() => null),
-        waitForCanvas(incomeCategoryChart).catch(() => null),
-        waitForCanvas(trendsChart).catch(() => null)
+      const results = await Promise.allSettled([
+        waitForCanvas(expensesCategoryChart),
+        waitForCanvas(incomeCategoryChart),
+        waitForCanvas(trendsChart)
       ])
-      console.log('✅ [Dashboard] Canvas disponibili, rendering grafici...')
+      
+      const found = results.filter(r => r.status === 'fulfilled').length
+      console.log(`✅ [Dashboard] ${found}/3 canvas trovati, rendering grafici...`)
+      
+      // Renderizza anche se non tutti i canvas sono disponibili
       renderCharts()
     } catch (error) {
       console.error('❌ [Dashboard] Errore nell\'attesa dei canvas:', error)
@@ -258,7 +303,7 @@ const loadStatistics = async () => {
       setTimeout(() => {
         console.log('🔄 [Dashboard] Retry rendering grafici...')
         renderCharts()
-      }, 500)
+      }, 300)
     }
   } catch (error) {
     console.error('❌ [Dashboard] Errore nel caricamento statistiche:', error)
@@ -525,17 +570,33 @@ const renderCharts = () => {
 }
 
 // Watch per renderizzare i grafici quando i canvas sono disponibili
-watchEffect(() => {
+watch([statistics, expensesCategoryChart, incomeCategoryChart, trendsChart], () => {
   if (statistics.value && !loading.value) {
-    // Aspetta un po' per assicurarsi che il DOM sia aggiornato
-    setTimeout(() => {
-      if (expensesCategoryChart.value || incomeCategoryChart.value || trendsChart.value) {
-        console.log('🔄 [Dashboard] WatchEffect: Canvas disponibili, rendering grafici...')
-        renderCharts()
-      }
-    }, 100)
+    // Usa requestAnimationFrame per aspettare il rendering
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const hasCanvas = expensesCategoryChart.value || incomeCategoryChart.value || trendsChart.value
+        if (hasCanvas) {
+          console.log('🔄 [Dashboard] Watch: Canvas disponibili, rendering grafici...')
+          console.log('📊 [Dashboard] Canvas refs:', {
+            expenses: !!expensesCategoryChart.value,
+            income: !!incomeCategoryChart.value,
+            trends: !!trendsChart.value
+          })
+          renderCharts()
+        } else {
+          console.log('⏳ [Dashboard] Watch: Canvas non ancora disponibili, riprovo tra poco...')
+          // Retry dopo un breve delay
+          setTimeout(() => {
+            if (statistics.value && !loading.value) {
+              renderCharts()
+            }
+          }, 200)
+        }
+      })
+    })
   }
-})
+}, { flush: 'post', immediate: false })
 
 onMounted(() => {
   console.log('🚀 [Dashboard] Componente montato')

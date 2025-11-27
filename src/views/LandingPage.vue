@@ -2,16 +2,16 @@
   <div class="landing-page">
     <!-- Navbar -->
     <nav class="bg-neutral-900/95 backdrop-blur-sm border-b border-neutral-800 fixed top-0 left-0 right-0 z-50">
-      <div class="container mx-auto px-4">
-        <div class="flex items-center justify-between h-16">
-          <router-link to="/" class="text-xl font-bold text-white hover:text-accent-blue-light transition-colors">
+      <div class="container mx-auto px-3 md:px-4">
+        <div class="flex items-center justify-between h-14 md:h-16">
+          <router-link to="/" class="text-lg md:text-xl font-bold text-white hover:text-accent-blue-light transition-colors">
             Finanza
           </router-link>
-          <div class="flex items-center space-x-4">
-            <router-link to="/login" class="text-neutral-300 hover:text-white px-4 py-2 rounded-lg transition-colors">
+          <div class="flex items-center space-x-2 md:space-x-4">
+            <router-link to="/login" class="text-neutral-300 hover:text-white px-3 md:px-4 py-1.5 md:py-2 rounded-lg transition-colors text-sm md:text-base">
               Login
             </router-link>
-            <router-link to="/register" class="bg-accent-blue hover:bg-accent-blue-dark text-white px-4 py-2 rounded-lg transition-colors font-medium">
+            <router-link to="/register" class="bg-accent-blue hover:bg-accent-blue-dark text-white px-3 md:px-4 py-1.5 md:py-2 rounded-lg transition-colors font-medium text-sm md:text-base">
               Registrati
             </router-link>
           </div>
@@ -20,129 +20,129 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero bg-neutral-900 text-white min-h-screen flex items-center pt-16">
-      <div class="container mx-auto px-4">
+    <section class="hero bg-neutral-900 text-white min-h-screen flex items-center pt-14 md:pt-16">
+      <div class="container mx-auto px-3 md:px-4">
         <div class="text-center animate-fade-in">
-          <h1 class="text-5xl md:text-6xl font-bold mb-6 animate-slide-down text-white">
+          <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 animate-slide-down text-white">
             Gestisci le Tue Finanze con Semplicità
           </h1>
-          <p class="text-xl md:text-2xl mb-8 text-neutral-300 animate-slide-up">
+          <p class="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 md:mb-8 text-neutral-300 animate-slide-up px-2">
             Traccia entrate e spese, visualizza statistiche dettagliate e prendi il controllo del tuo budget
           </p>
-          <div class="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up" style="animation-delay: 0.2s">
-            <router-link to="/register" class="btn-primary text-lg px-8 py-3">
+          <div class="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center animate-slide-up px-4" style="animation-delay: 0.2s">
+            <router-link to="/register" class="btn-primary text-base md:text-lg px-6 md:px-8 py-2.5 md:py-3 w-full sm:w-auto">
               Inizia Gratis
             </router-link>
-            <router-link to="/login" class="btn-secondary text-lg px-8 py-3 bg-white text-primary-dark hover:bg-neutral-50">
+            <router-link to="/login" class="btn-secondary text-base md:text-lg px-6 md:px-8 py-2.5 md:py-3 bg-white text-primary-dark hover:bg-neutral-50 w-full sm:w-auto">
               Accedi
             </router-link>
           </div>
         </div>
 
         <!-- Demo Stats -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16 animate-slide-up" style="animation-delay: 0.4s">
-          <div class="card text-center transform hover:scale-[1.02] transition-all bg-white">
-            <div class="w-12 h-12 mx-auto mb-4 bg-accent-blue/10 rounded-lg flex items-center justify-center">
-              <svg class="w-6 h-6 text-accent-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mt-12 md:mt-16 animate-slide-up px-2" style="animation-delay: 0.4s">
+          <div class="bg-white rounded-lg shadow-lg p-4 md:p-6 text-center transform hover:scale-[1.02] transition-all">
+            <div class="w-10 h-10 md:w-12 md:h-12 mx-auto mb-3 md:mb-4 bg-accent-blue/10 rounded-lg flex items-center justify-center">
+              <svg class="w-5 h-5 md:w-6 md:h-6 text-accent-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <div class="text-3xl font-bold text-primary-dark">€ 3.450</div>
-            <div class="text-neutral-600 mt-2 text-sm">Saldo Totale</div>
+            <div class="text-2xl md:text-3xl font-bold text-primary-dark">€ 3.450</div>
+            <div class="text-neutral-600 mt-2 text-xs md:text-sm">Saldo Totale</div>
           </div>
-          <div class="card text-center transform hover:scale-[1.02] transition-all bg-white">
-            <div class="w-12 h-12 mx-auto mb-4 bg-success-light/10 rounded-lg flex items-center justify-center">
-              <svg class="w-6 h-6 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div class="bg-white rounded-lg shadow-lg p-4 md:p-6 text-center transform hover:scale-[1.02] transition-all">
+            <div class="w-10 h-10 md:w-12 md:h-12 mx-auto mb-3 md:mb-4 bg-success-light/10 rounded-lg flex items-center justify-center">
+              <svg class="w-5 h-5 md:w-6 md:h-6 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
               </svg>
             </div>
-            <div class="text-3xl font-bold text-success">€ 2.500</div>
-            <div class="text-neutral-600 mt-2 text-sm">Entrate Mensili</div>
+            <div class="text-2xl md:text-3xl font-bold text-success">€ 2.500</div>
+            <div class="text-neutral-600 mt-2 text-xs md:text-sm">Entrate Mensili</div>
           </div>
-          <div class="card text-center transform hover:scale-[1.02] transition-all bg-white">
-            <div class="w-12 h-12 mx-auto mb-4 bg-error-light/10 rounded-lg flex items-center justify-center">
-              <svg class="w-6 h-6 text-error" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div class="bg-white rounded-lg shadow-lg p-4 md:p-6 text-center transform hover:scale-[1.02] transition-all sm:col-span-2 md:col-span-1">
+            <div class="w-10 h-10 md:w-12 md:h-12 mx-auto mb-3 md:mb-4 bg-error-light/10 rounded-lg flex items-center justify-center">
+              <svg class="w-5 h-5 md:w-6 md:h-6 text-error" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6 6" />
               </svg>
             </div>
-            <div class="text-3xl font-bold text-error">€ 1.350</div>
-            <div class="text-neutral-600 mt-2 text-sm">Spese Mensili</div>
+            <div class="text-2xl md:text-3xl font-bold text-error">€ 1.350</div>
+            <div class="text-neutral-600 mt-2 text-xs md:text-sm">Spese Mensili</div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Features Section -->
-    <section class="py-20 bg-neutral-800">
-      <div class="container mx-auto px-4">
-        <h2 class="text-4xl font-bold text-center mb-16 text-white">Come Funziona</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <section class="py-12 md:py-20 bg-neutral-800">
+      <div class="container mx-auto px-3 md:px-4">
+        <h2 class="text-2xl md:text-4xl font-bold text-center mb-8 md:mb-16 text-white">Come Funziona</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
           <div 
-            class="bg-neutral-700/50 backdrop-blur-sm border border-neutral-600 rounded-lg p-6 text-center animate-on-scroll shadow-xl"
+            class="bg-neutral-700/50 backdrop-blur-sm border border-neutral-600 rounded-lg p-4 md:p-6 text-center animate-on-scroll shadow-xl"
             style="animation-delay: 0s"
           >
-            <div class="w-16 h-16 mx-auto mb-4 bg-accent-blue/20 rounded-lg flex items-center justify-center">
-              <svg class="w-8 h-8 text-accent-blue-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="w-12 h-12 md:w-16 md:h-16 mx-auto mb-3 md:mb-4 bg-accent-blue/20 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 md:w-8 md:h-8 text-accent-blue-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
             </div>
-            <h3 class="text-xl font-bold mb-3 text-white">Traccia Transazioni</h3>
-            <p class="text-neutral-300">Registra facilmente entrate e spese con categorie personalizzate</p>
+            <h3 class="text-lg md:text-xl font-bold mb-2 md:mb-3 text-white">Traccia Transazioni</h3>
+            <p class="text-sm md:text-base text-neutral-300">Registra facilmente entrate e spese con categorie personalizzate</p>
           </div>
           <div 
-            class="bg-neutral-700/50 backdrop-blur-sm border border-neutral-600 rounded-lg p-6 text-center animate-on-scroll shadow-xl"
+            class="bg-neutral-700/50 backdrop-blur-sm border border-neutral-600 rounded-lg p-4 md:p-6 text-center animate-on-scroll shadow-xl"
             style="animation-delay: 0.1s"
           >
-            <div class="w-16 h-16 mx-auto mb-4 bg-accent-blue/20 rounded-lg flex items-center justify-center">
-              <svg class="w-8 h-8 text-accent-blue-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="w-12 h-12 md:w-16 md:h-16 mx-auto mb-3 md:mb-4 bg-accent-blue/20 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 md:w-8 md:h-8 text-accent-blue-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
               </svg>
             </div>
-            <h3 class="text-xl font-bold mb-3 text-white">Ricorrenze</h3>
-            <p class="text-neutral-300">Imposta transazioni ricorrenti giornaliere, settimanali o mensili</p>
+            <h3 class="text-lg md:text-xl font-bold mb-2 md:mb-3 text-white">Ricorrenze</h3>
+            <p class="text-sm md:text-base text-neutral-300">Imposta transazioni ricorrenti giornaliere, settimanali o mensili</p>
           </div>
           <div 
-            class="bg-neutral-700/50 backdrop-blur-sm border border-neutral-600 rounded-lg p-6 text-center animate-on-scroll shadow-xl"
+            class="bg-neutral-700/50 backdrop-blur-sm border border-neutral-600 rounded-lg p-4 md:p-6 text-center animate-on-scroll shadow-xl"
             style="animation-delay: 0.2s"
           >
-            <div class="w-16 h-16 mx-auto mb-4 bg-accent-blue/20 rounded-lg flex items-center justify-center">
-              <svg class="w-8 h-8 text-accent-blue-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="w-12 h-12 md:w-16 md:h-16 mx-auto mb-3 md:mb-4 bg-accent-blue/20 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 md:w-8 md:h-8 text-accent-blue-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
               </svg>
             </div>
-            <h3 class="text-xl font-bold mb-3 text-white">Statistiche</h3>
-            <p class="text-neutral-300">Visualizza grafici dettagliati e analisi delle tue finanze</p>
+            <h3 class="text-lg md:text-xl font-bold mb-2 md:mb-3 text-white">Statistiche</h3>
+            <p class="text-sm md:text-base text-neutral-300">Visualizza grafici dettagliati e analisi delle tue finanze</p>
           </div>
           <div 
-            class="bg-neutral-700/50 backdrop-blur-sm border border-neutral-600 rounded-lg p-6 text-center animate-on-scroll shadow-xl"
+            class="bg-neutral-700/50 backdrop-blur-sm border border-neutral-600 rounded-lg p-4 md:p-6 text-center animate-on-scroll shadow-xl"
             style="animation-delay: 0.3s"
           >
-            <div class="w-16 h-16 mx-auto mb-4 bg-accent-blue/20 rounded-lg flex items-center justify-center">
-              <svg class="w-8 h-8 text-accent-blue-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="w-12 h-12 md:w-16 md:h-16 mx-auto mb-3 md:mb-4 bg-accent-blue/20 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 md:w-8 md:h-8 text-accent-blue-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
               </svg>
             </div>
-            <h3 class="text-xl font-bold mb-3 text-white">Esporta Dati</h3>
-            <p class="text-neutral-300">Scarica i tuoi dati in formato Excel o PDF</p>
+            <h3 class="text-lg md:text-xl font-bold mb-2 md:mb-3 text-white">Esporta Dati</h3>
+            <p class="text-sm md:text-base text-neutral-300">Scarica i tuoi dati in formato Excel o PDF</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Demo Chart Section -->
-    <section class="py-20 bg-neutral-900">
-      <div class="container mx-auto px-4">
-        <h2 class="text-4xl font-bold text-center mb-16 text-white">Visualizza i Tuoi Dati</h2>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl">
-            <h3 class="text-2xl font-bold mb-6 text-white">Spese per Categoria</h3>
-            <div class="chart-container">
+    <section class="py-12 md:py-20 bg-neutral-900">
+      <div class="container mx-auto px-3 md:px-4">
+        <h2 class="text-2xl md:text-4xl font-bold text-center mb-8 md:mb-16 text-white">Visualizza i Tuoi Dati</h2>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8">
+          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-4 md:p-6 shadow-xl">
+            <h3 class="text-lg md:text-2xl font-bold mb-4 md:mb-6 text-white">Spese per Categoria</h3>
+            <div class="chart-container" style="height: 250px; md:height: 300px;">
               <canvas ref="categoryChart"></canvas>
             </div>
           </div>
-          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl">
-            <h3 class="text-2xl font-bold mb-6 text-white">Entrate vs Spese</h3>
-            <div class="chart-container">
+          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-4 md:p-6 shadow-xl">
+            <h3 class="text-lg md:text-2xl font-bold mb-4 md:mb-6 text-white">Entrate vs Spese</h3>
+            <div class="chart-container" style="height: 250px; md:height: 300px;">
               <canvas ref="trendsChart"></canvas>
             </div>
           </div>
@@ -151,11 +151,11 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="py-20 bg-primary-dark text-white">
-      <div class="container mx-auto px-4 text-center">
-        <h2 class="text-4xl font-bold mb-6">Pronto a Iniziare?</h2>
-        <p class="text-xl mb-8 text-neutral-300">Registrati ora e prendi il controllo delle tue finanze</p>
-        <router-link to="/register" class="btn-primary text-lg px-8 py-3">
+    <section class="py-12 md:py-20 bg-primary-dark text-white">
+      <div class="container mx-auto px-3 md:px-4 text-center">
+        <h2 class="text-2xl md:text-4xl font-bold mb-4 md:mb-6">Pronto a Iniziare?</h2>
+        <p class="text-base md:text-xl mb-6 md:mb-8 text-neutral-300">Registrati ora e prendi il controllo delle tue finanze</p>
+        <router-link to="/register" class="btn-primary text-base md:text-lg px-6 md:px-8 py-2.5 md:py-3 inline-block">
           Crea Account Gratuito
         </router-link>
       </div>

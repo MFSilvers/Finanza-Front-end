@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="min-h-screen">
     <Navbar v-if="showNavbar" />
-    <main :class="{ 'pt-16': showNavbar }">
+    <main :class="{ 'pt-14 md:pt-16': showNavbar }">
       <router-view />
     </main>
   </div>

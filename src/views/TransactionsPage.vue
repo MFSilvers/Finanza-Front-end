@@ -1,17 +1,17 @@
 <template>
-  <div class="transactions-page min-h-screen bg-gradient-to-br from-neutral-900 via-neutral-800 to-primary-dark py-8">
-    <div class="container mx-auto px-4">
-      <div class="mb-8">
-        <h1 class="text-4xl font-bold text-white mb-4">Transazioni</h1>
+  <div class="transactions-page min-h-screen bg-gradient-to-br from-neutral-900 via-neutral-800 to-primary-dark py-4 md:py-8">
+    <div class="container mx-auto px-3 md:px-4">
+      <div class="mb-6 md:mb-8">
+        <h1 class="text-2xl md:text-4xl font-bold text-white mb-4">Transazioni</h1>
         
         <!-- Add Transaction Button -->
-        <button @click="openAddModal" class="btn-primary mb-6">
+        <button @click="openAddModal" class="btn-primary mb-4 md:mb-6 w-full md:w-auto text-sm md:text-base">
           + Nuova Transazione
         </button>
 
         <!-- Filters -->
-        <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl mb-6">
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-4 md:p-6 shadow-xl mb-6">
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
             <div>
               <label class="block text-sm font-medium text-neutral-300 mb-2">Tipo</label>
               <select v-model="filters.type" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white">
@@ -38,9 +38,9 @@
               <input v-model="filters.end_date" type="date" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white" />
             </div>
           </div>
-          <div class="flex gap-4 mt-4">
-            <button @click="applyFilters" class="btn-primary">Applica Filtri</button>
-            <button @click="clearFilters" class="btn-secondary">Reset</button>
+          <div class="flex flex-col sm:flex-row gap-3 md:gap-4 mt-4">
+            <button @click="applyFilters" class="btn-primary flex-1 sm:flex-none text-sm md:text-base">Applica Filtri</button>
+            <button @click="clearFilters" class="btn-secondary flex-1 sm:flex-none text-sm md:text-base">Reset</button>
           </div>
         </div>
       </div>
@@ -51,18 +51,56 @@
       </div>
 
       <!-- Transactions List -->
-      <div v-else class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl">
-        <div class="overflow-x-auto">
+      <div v-else class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-4 md:p-6 shadow-xl">
+        <!-- Mobile Card View -->
+        <div class="md:hidden space-y-3">
+          <div 
+            v-for="transaction in transactions" 
+            :key="transaction.id"
+            class="bg-neutral-700/30 rounded-lg p-4 border border-neutral-600"
+          >
+            <div class="flex justify-between items-start mb-3">
+              <div class="flex-1">
+                <span class="text-xs text-neutral-400 mb-1 block">{{ formatDate(transaction.date) }}</span>
+                <span 
+                  class="inline-block px-2 py-1 rounded text-xs font-semibold mb-2"
+                  :class="transaction.type === 'income' ? 'bg-success-light/20 text-success-light' : 'bg-error-light/20 text-error-light'"
+                >
+                  {{ transaction.type === 'income' ? 'Entrata' : 'Spesa' }}
+                </span>
+              </div>
+              <p class="text-lg font-bold" :class="transaction.type === 'income' ? 'text-success-light' : 'text-error-light'">
+                {{ transaction.type === 'income' ? '+' : '-' }}€ {{ formatNumber(transaction.amount) }}
+              </p>
+            </div>
+            <p class="text-sm text-neutral-300 mb-1">{{ transaction.description || '-' }}</p>
+            <div class="flex justify-between items-center mt-2">
+              <span class="text-xs text-neutral-400">{{ transaction.category_name || 'Altro' }}</span>
+              <span class="text-xs text-neutral-400">{{ getRecurringLabel(transaction.recurring_rule) }}</span>
+            </div>
+            <div class="flex gap-2 mt-3 pt-3 border-t border-neutral-600">
+              <button @click="openEditModal(transaction)" class="flex-1 bg-accent-blue/20 hover:bg-accent-blue/30 text-accent-blue-light px-3 py-2 rounded text-sm font-medium transition-colors">
+                Modifica
+              </button>
+              <button @click="deleteTransaction(transaction.id)" class="flex-1 bg-error-light/20 hover:bg-error-light/30 text-error-light px-3 py-2 rounded text-sm font-medium transition-colors">
+                Elimina
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Desktop Table View -->
+        <div class="hidden md:block overflow-x-auto">
           <table class="w-full">
             <thead>
               <tr class="border-b border-neutral-700">
-                <th class="text-left py-3 px-4 text-neutral-300 font-semibold">Data</th>
-                <th class="text-left py-3 px-4 text-neutral-300 font-semibold">Tipo</th>
-                <th class="text-left py-3 px-4 text-neutral-300 font-semibold">Categoria</th>
-                <th class="text-left py-3 px-4 text-neutral-300 font-semibold">Descrizione</th>
-                <th class="text-left py-3 px-4 text-neutral-300 font-semibold">Ricorrenza</th>
-                <th class="text-right py-3 px-4 text-neutral-300 font-semibold">Importo</th>
-                <th class="text-center py-3 px-4 text-neutral-300 font-semibold">Azioni</th>
+                <th class="text-left py-3 px-4 text-neutral-300 font-semibold text-sm">Data</th>
+                <th class="text-left py-3 px-4 text-neutral-300 font-semibold text-sm">Tipo</th>
+                <th class="text-left py-3 px-4 text-neutral-300 font-semibold text-sm">Categoria</th>
+                <th class="text-left py-3 px-4 text-neutral-300 font-semibold text-sm">Descrizione</th>
+                <th class="text-left py-3 px-4 text-neutral-300 font-semibold text-sm">Ricorrenza</th>
+                <th class="text-right py-3 px-4 text-neutral-300 font-semibold text-sm">Importo</th>
+                <th class="text-center py-3 px-4 text-neutral-300 font-semibold text-sm">Azioni</th>
               </tr>
             </thead>
             <tbody>
@@ -71,23 +109,23 @@
                 :key="transaction.id"
                 class="border-b border-neutral-700 hover:bg-neutral-700/30 transition"
               >
-                <td class="py-3 px-4 text-neutral-300">{{ formatDate(transaction.date) }}</td>
+                <td class="py-3 px-4 text-neutral-300 text-sm">{{ formatDate(transaction.date) }}</td>
                 <td class="py-3 px-4">
                   <span 
-                    class="px-2 py-1 rounded text-sm font-semibold"
+                    class="px-2 py-1 rounded text-xs font-semibold"
                     :class="transaction.type === 'income' ? 'bg-success-light/20 text-success-light' : 'bg-error-light/20 text-error-light'"
                   >
                     {{ transaction.type === 'income' ? 'Entrata' : 'Spesa' }}
                   </span>
                 </td>
-                <td class="py-3 px-4 text-neutral-300">{{ transaction.category_name || 'Altro' }}</td>
-                <td class="py-3 px-4 text-neutral-300">{{ transaction.description || '-' }}</td>
+                <td class="py-3 px-4 text-neutral-300 text-sm">{{ transaction.category_name || 'Altro' }}</td>
+                <td class="py-3 px-4 text-neutral-300 text-sm">{{ transaction.description || '-' }}</td>
                 <td class="py-3 px-4">
-                  <span class="text-sm text-neutral-400">
+                  <span class="text-xs text-neutral-400">
                     {{ getRecurringLabel(transaction.recurring_rule) }}
                   </span>
                 </td>
-                <td class="py-3 px-4 text-right font-bold" :class="transaction.type === 'income' ? 'text-success-light' : 'text-error-light'">
+                <td class="py-3 px-4 text-right font-bold text-sm" :class="transaction.type === 'income' ? 'text-success-light' : 'text-error-light'">
                   {{ transaction.type === 'income' ? '+' : '-' }}€ {{ formatNumber(transaction.amount) }}
                 </td>
                 <td class="py-3 px-4">
@@ -125,10 +163,10 @@
     </div>
 
     <!-- Add/Edit Modal -->
-    <div v-if="showModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div class="bg-neutral-800 border border-neutral-700 rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6">
-        <div class="flex justify-between items-center mb-6">
-          <h2 class="text-2xl font-bold text-white">
+    <div v-if="showModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-3 md:p-4">
+      <div class="bg-neutral-800 border border-neutral-700 rounded-xl shadow-2xl max-w-2xl w-full max-h-[95vh] md:max-h-[90vh] overflow-y-auto p-4 md:p-6">
+        <div class="flex justify-between items-center mb-4 md:mb-6">
+          <h2 class="text-xl md:text-2xl font-bold text-white">
             {{ editingTransaction ? 'Modifica Transazione' : 'Nuova Transazione' }}
           </h2>
           <button @click="closeModal" class="text-neutral-500 hover:text-neutral-700 transition-colors" title="Chiudi">
@@ -138,8 +176,8 @@
           </button>
         </div>
 
-        <form @submit.prevent="saveTransaction" class="space-y-4">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <form @submit.prevent="saveTransaction" class="space-y-3 md:space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
             <div>
               <label class="block text-sm font-medium text-neutral-300 mb-2">Tipo *</label>
               <select v-model="formData.type" required class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white">
@@ -217,11 +255,11 @@
             ></textarea>
           </div>
 
-          <div class="flex gap-4 justify-end">
-            <button type="button" @click="closeModal" class="btn-secondary">
+          <div class="flex flex-col sm:flex-row gap-3 md:gap-4 justify-end mt-4">
+            <button type="button" @click="closeModal" class="btn-secondary w-full sm:w-auto text-sm md:text-base">
               Annulla
             </button>
-            <button type="submit" class="btn-primary" :disabled="saving">
+            <button type="submit" class="btn-primary w-full sm:w-auto text-sm md:text-base" :disabled="saving">
               {{ saving ? 'Salvataggio...' : 'Salva' }}
             </button>
           </div>

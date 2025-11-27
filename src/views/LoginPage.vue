@@ -1,9 +1,9 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-neutral-900 via-neutral-800 to-primary-dark flex items-center justify-center px-4">
-    <div class="bg-neutral-800/90 backdrop-blur-sm border border-neutral-700 rounded-xl shadow-2xl max-w-md w-full animate-slide-up p-8">
-      <div class="text-center mb-8">
-        <h1 class="text-3xl font-bold text-white mb-2">Accedi</h1>
-        <p class="text-neutral-300">Benvenuto! Accedi al tuo account</p>
+  <div class="min-h-screen bg-gradient-to-br from-neutral-900 via-neutral-800 to-primary-dark flex items-center justify-center px-3 md:px-4 py-8">
+    <div class="bg-neutral-800/90 backdrop-blur-sm border border-neutral-700 rounded-xl shadow-2xl max-w-md w-full animate-slide-up p-6 md:p-8">
+      <div class="text-center mb-6 md:mb-8">
+        <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">Accedi</h1>
+        <p class="text-sm md:text-base text-neutral-300">Benvenuto! Accedi al tuo account</p>
       </div>
 
       <form @submit.prevent="handleLogin" class="space-y-6">
