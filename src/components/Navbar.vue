@@ -104,19 +104,3 @@ const handleLogout = () => {
   router.push('/')
 }
 </script>
-
-<script setup>
-import { computed } from 'vue'
-import { useRouter } from 'vue-router'
-import { useAuthStore } from '../stores/auth'
-
-const router = useRouter()
-const authStore = useAuthStore()
-
-const user = computed(() => authStore.currentUser)
-
-const handleLogout = () => {
-  authStore.logout()
-  router.push('/')
-}
-</script>
