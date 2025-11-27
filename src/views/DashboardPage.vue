@@ -253,7 +253,13 @@ const renderCharts = () => {
         maintainAspectRatio: false,
         plugins: {
           legend: {
-            position: 'bottom'
+            position: 'bottom',
+            labels: {
+              color: '#E2E8F0',
+              font: {
+                size: 12
+              }
+            }
           }
         }
       }
@@ -282,7 +288,27 @@ const renderCharts = () => {
         },
         scales: {
           y: {
-            beginAtZero: true
+            beginAtZero: true,
+            ticks: {
+              color: '#E2E8F0',
+              font: {
+                size: 12
+              }
+            },
+            grid: {
+              color: 'rgba(226, 232, 240, 0.1)'
+            }
+          },
+          x: {
+            ticks: {
+              color: '#E2E8F0',
+              font: {
+                size: 12
+              }
+            },
+            grid: {
+              color: 'rgba(226, 232, 240, 0.1)'
+            }
           }
         }
       }
@@ -319,12 +345,38 @@ const renderCharts = () => {
         maintainAspectRatio: false,
         plugins: {
           legend: {
-            position: 'bottom'
+            position: 'bottom',
+            labels: {
+              color: '#E2E8F0',
+              font: {
+                size: 12
+              }
+            }
           }
         },
         scales: {
           y: {
-            beginAtZero: true
+            beginAtZero: true,
+            ticks: {
+              color: '#E2E8F0',
+              font: {
+                size: 12
+              }
+            },
+            grid: {
+              color: 'rgba(226, 232, 240, 0.1)'
+            }
+          },
+          x: {
+            ticks: {
+              color: '#E2E8F0',
+              font: {
+                size: 12
+              }
+            },
+            grid: {
+              color: 'rgba(226, 232, 240, 0.1)'
+            }
           }
         }
       }

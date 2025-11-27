@@ -52,6 +52,10 @@
   width: 100%;
 }
 
+.chart-container canvas {
+  background-color: transparent;
+}
+
 /* Loading spinner */
 .spinner {
   border: 3px solid #E2E8F0;
