@@ -1,7 +1,26 @@
 <template>
   <div class="landing-page">
+    <!-- Navbar -->
+    <nav class="bg-neutral-900/95 backdrop-blur-sm border-b border-neutral-800 fixed top-0 left-0 right-0 z-50">
+      <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
+          <router-link to="/" class="text-xl font-bold text-white hover:text-accent-blue-light transition-colors">
+            Finanza
+          </router-link>
+          <div class="flex items-center space-x-4">
+            <router-link to="/login" class="text-neutral-300 hover:text-white px-4 py-2 rounded-lg transition-colors">
+              Login
+            </router-link>
+            <router-link to="/register" class="bg-accent-blue hover:bg-accent-blue-dark text-white px-4 py-2 rounded-lg transition-colors font-medium">
+              Registrati
+            </router-link>
+          </div>
+        </div>
+      </div>
+    </nav>
+
     <!-- Hero Section -->
-    <section class="hero bg-neutral-900 text-white min-h-screen flex items-center">
+    <section class="hero bg-neutral-900 text-white min-h-screen flex items-center pt-16">
       <div class="container mx-auto px-4">
         <div class="text-center animate-fade-in">
           <h1 class="text-5xl md:text-6xl font-bold mb-6 animate-slide-down text-white">
@@ -54,75 +73,75 @@
     </section>
 
     <!-- Features Section -->
-    <section class="py-20 bg-neutral-50">
+    <section class="py-20 bg-neutral-800">
       <div class="container mx-auto px-4">
-        <h2 class="text-4xl font-bold text-center mb-16 text-primary-dark">Come Funziona</h2>
+        <h2 class="text-4xl font-bold text-center mb-16 text-white">Come Funziona</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div 
-            class="card text-center animate-on-scroll"
+            class="bg-neutral-700/50 backdrop-blur-sm border border-neutral-600 rounded-lg p-6 text-center animate-on-scroll shadow-xl"
             style="animation-delay: 0s"
           >
-            <div class="w-16 h-16 mx-auto mb-4 bg-accent-blue/10 rounded-lg flex items-center justify-center">
-              <svg class="w-8 h-8 text-accent-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="w-16 h-16 mx-auto mb-4 bg-accent-blue/20 rounded-lg flex items-center justify-center">
+              <svg class="w-8 h-8 text-accent-blue-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
             </div>
-            <h3 class="text-xl font-bold mb-3 text-primary-dark">Traccia Transazioni</h3>
-            <p class="text-neutral-600">Registra facilmente entrate e spese con categorie personalizzate</p>
+            <h3 class="text-xl font-bold mb-3 text-white">Traccia Transazioni</h3>
+            <p class="text-neutral-300">Registra facilmente entrate e spese con categorie personalizzate</p>
           </div>
           <div 
-            class="card text-center animate-on-scroll"
+            class="bg-neutral-700/50 backdrop-blur-sm border border-neutral-600 rounded-lg p-6 text-center animate-on-scroll shadow-xl"
             style="animation-delay: 0.1s"
           >
-            <div class="w-16 h-16 mx-auto mb-4 bg-accent-blue/10 rounded-lg flex items-center justify-center">
-              <svg class="w-8 h-8 text-accent-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="w-16 h-16 mx-auto mb-4 bg-accent-blue/20 rounded-lg flex items-center justify-center">
+              <svg class="w-8 h-8 text-accent-blue-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
               </svg>
             </div>
-            <h3 class="text-xl font-bold mb-3 text-primary-dark">Ricorrenze</h3>
-            <p class="text-neutral-600">Imposta transazioni ricorrenti giornaliere, settimanali o mensili</p>
+            <h3 class="text-xl font-bold mb-3 text-white">Ricorrenze</h3>
+            <p class="text-neutral-300">Imposta transazioni ricorrenti giornaliere, settimanali o mensili</p>
           </div>
           <div 
-            class="card text-center animate-on-scroll"
+            class="bg-neutral-700/50 backdrop-blur-sm border border-neutral-600 rounded-lg p-6 text-center animate-on-scroll shadow-xl"
             style="animation-delay: 0.2s"
           >
-            <div class="w-16 h-16 mx-auto mb-4 bg-accent-blue/10 rounded-lg flex items-center justify-center">
-              <svg class="w-8 h-8 text-accent-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="w-16 h-16 mx-auto mb-4 bg-accent-blue/20 rounded-lg flex items-center justify-center">
+              <svg class="w-8 h-8 text-accent-blue-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
               </svg>
             </div>
-            <h3 class="text-xl font-bold mb-3 text-primary-dark">Statistiche</h3>
-            <p class="text-neutral-600">Visualizza grafici dettagliati e analisi delle tue finanze</p>
+            <h3 class="text-xl font-bold mb-3 text-white">Statistiche</h3>
+            <p class="text-neutral-300">Visualizza grafici dettagliati e analisi delle tue finanze</p>
           </div>
           <div 
-            class="card text-center animate-on-scroll"
+            class="bg-neutral-700/50 backdrop-blur-sm border border-neutral-600 rounded-lg p-6 text-center animate-on-scroll shadow-xl"
             style="animation-delay: 0.3s"
           >
-            <div class="w-16 h-16 mx-auto mb-4 bg-accent-blue/10 rounded-lg flex items-center justify-center">
-              <svg class="w-8 h-8 text-accent-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="w-16 h-16 mx-auto mb-4 bg-accent-blue/20 rounded-lg flex items-center justify-center">
+              <svg class="w-8 h-8 text-accent-blue-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
               </svg>
             </div>
-            <h3 class="text-xl font-bold mb-3 text-primary-dark">Esporta Dati</h3>
-            <p class="text-neutral-600">Scarica i tuoi dati in formato Excel o PDF</p>
+            <h3 class="text-xl font-bold mb-3 text-white">Esporta Dati</h3>
+            <p class="text-neutral-300">Scarica i tuoi dati in formato Excel o PDF</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Demo Chart Section -->
-    <section class="py-20 bg-white">
+    <section class="py-20 bg-neutral-900">
       <div class="container mx-auto px-4">
-        <h2 class="text-4xl font-bold text-center mb-16 text-primary-dark">Visualizza i Tuoi Dati</h2>
+        <h2 class="text-4xl font-bold text-center mb-16 text-white">Visualizza i Tuoi Dati</h2>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div class="card">
-            <h3 class="text-2xl font-bold mb-6 text-primary-dark">Spese per Categoria</h3>
+          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl">
+            <h3 class="text-2xl font-bold mb-6 text-white">Spese per Categoria</h3>
             <div class="chart-container">
               <canvas ref="categoryChart"></canvas>
             </div>
           </div>
-          <div class="card">
-            <h3 class="text-2xl font-bold mb-6 text-primary-dark">Entrate vs Spese</h3>
+          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl">
+            <h3 class="text-2xl font-bold mb-6 text-white">Entrate vs Spese</h3>
             <div class="chart-container">
               <canvas ref="trendsChart"></canvas>
             </div>

@@ -1,26 +1,26 @@
 <template>
-  <div class="dashboard-page min-h-screen bg-neutral-50 py-8">
+  <div class="dashboard-page min-h-screen bg-gradient-to-br from-neutral-900 via-neutral-800 to-primary-dark py-8">
     <div class="container mx-auto px-4">
       <div class="mb-8">
-        <h1 class="text-4xl font-bold text-primary-dark mb-4">Dashboard</h1>
+        <h1 class="text-4xl font-bold text-white mb-4">Dashboard</h1>
         
         <!-- Date Filter -->
-        <div class="card mb-6">
+        <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl mb-6">
           <div class="flex flex-col md:flex-row gap-4 items-end">
             <div class="flex-1">
-              <label class="label">Data Inizio</label>
+              <label class="block text-sm font-medium text-neutral-300 mb-2">Data Inizio</label>
               <input 
                 v-model="filters.startDate" 
                 type="date" 
-                class="input-field"
+                class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white"
               />
             </div>
             <div class="flex-1">
-              <label class="label">Data Fine</label>
+              <label class="block text-sm font-medium text-neutral-300 mb-2">Data Fine</label>
               <input 
                 v-model="filters.endDate" 
                 type="date" 
-                class="input-field"
+                class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white"
               />
             </div>
             <button @click="applyFilters" class="btn-primary">
@@ -42,11 +42,11 @@
       <div v-else-if="statistics" class="space-y-8">
         <!-- Summary Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 animate-slide-up">
-          <div class="card bg-primary-dark text-white border-0">
+          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 text-white shadow-xl">
             <div class="flex items-center justify-between">
               <div>
                 <p class="text-sm text-neutral-300 mb-1">Saldo Totale</p>
-                <p class="text-3xl font-bold">€ {{ formatNumber(statistics.balance) }}</p>
+                <p class="text-3xl font-bold text-white">€ {{ formatNumber(statistics.balance) }}</p>
               </div>
               <div class="w-12 h-12 bg-accent-blue/20 rounded-lg flex items-center justify-center">
                 <svg class="w-6 h-6 text-accent-blue-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -56,28 +56,28 @@
             </div>
           </div>
 
-          <div class="card bg-white border-l-4 border-l-success">
+          <div class="bg-neutral-800/80 backdrop-blur-sm border-l-4 border-l-success border border-neutral-700 rounded-lg p-6 shadow-xl">
             <div class="flex items-center justify-between">
               <div>
-                <p class="text-sm text-neutral-600 mb-1">Entrate Totali</p>
-                <p class="text-3xl font-bold text-success">€ {{ formatNumber(statistics.total_income) }}</p>
+                <p class="text-sm text-neutral-300 mb-1">Entrate Totali</p>
+                <p class="text-3xl font-bold text-success-light">€ {{ formatNumber(statistics.total_income) }}</p>
               </div>
-              <div class="w-12 h-12 bg-success-light/10 rounded-lg flex items-center justify-center">
-                <svg class="w-6 h-6 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="w-12 h-12 bg-success-light/20 rounded-lg flex items-center justify-center">
+                <svg class="w-6 h-6 text-success-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                 </svg>
               </div>
             </div>
           </div>
 
-          <div class="card bg-white border-l-4 border-l-error">
+          <div class="bg-neutral-800/80 backdrop-blur-sm border-l-4 border-l-error border border-neutral-700 rounded-lg p-6 shadow-xl">
             <div class="flex items-center justify-between">
               <div>
-                <p class="text-sm text-neutral-600 mb-1">Spese Totali</p>
-                <p class="text-3xl font-bold text-error">€ {{ formatNumber(statistics.total_expense) }}</p>
+                <p class="text-sm text-neutral-300 mb-1">Spese Totali</p>
+                <p class="text-3xl font-bold text-error-light">€ {{ formatNumber(statistics.total_expense) }}</p>
               </div>
-              <div class="w-12 h-12 bg-error-light/10 rounded-lg flex items-center justify-center">
-                <svg class="w-6 h-6 text-error" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="w-12 h-12 bg-error-light/20 rounded-lg flex items-center justify-center">
+                <svg class="w-6 h-6 text-error-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6 6" />
                 </svg>
               </div>
@@ -87,29 +87,29 @@
 
         <!-- Average Cards -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="card">
-            <h3 class="text-lg font-semibold text-neutral-700 mb-2">Media Mensile Entrate</h3>
-            <p class="text-2xl font-bold text-success">€ {{ formatNumber(statistics.average_monthly_income) }}</p>
+          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl">
+            <h3 class="text-lg font-semibold text-neutral-300 mb-2">Media Mensile Entrate</h3>
+            <p class="text-2xl font-bold text-success-light">€ {{ formatNumber(statistics.average_monthly_income) }}</p>
           </div>
-          <div class="card">
-            <h3 class="text-lg font-semibold text-neutral-700 mb-2">Media Mensile Spese</h3>
-            <p class="text-2xl font-bold text-error">€ {{ formatNumber(statistics.average_monthly_expense) }}</p>
+          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl">
+            <h3 class="text-lg font-semibold text-neutral-300 mb-2">Media Mensile Spese</h3>
+            <p class="text-2xl font-bold text-error-light">€ {{ formatNumber(statistics.average_monthly_expense) }}</p>
           </div>
         </div>
 
         <!-- Charts -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <!-- Expenses by Category -->
-          <div class="card">
-            <h3 class="text-2xl font-bold mb-6 text-primary-dark">Spese per Categoria</h3>
+          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl">
+            <h3 class="text-2xl font-bold mb-6 text-white">Spese per Categoria</h3>
             <div class="chart-container" style="height: 350px;">
               <canvas ref="expensesCategoryChart"></canvas>
             </div>
           </div>
 
           <!-- Income by Category -->
-          <div class="card">
-            <h3 class="text-2xl font-bold mb-6 text-primary-dark">Entrate per Categoria</h3>
+          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl">
+            <h3 class="text-2xl font-bold mb-6 text-white">Entrate per Categoria</h3>
             <div class="chart-container" style="height: 350px;">
               <canvas ref="incomeCategoryChart"></canvas>
             </div>
@@ -117,45 +117,45 @@
         </div>
 
         <!-- Monthly Trends -->
-        <div class="card">
-          <h3 class="text-2xl font-bold mb-6 text-primary-dark">Andamento Mensile</h3>
+        <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl">
+          <h3 class="text-2xl font-bold mb-6 text-white">Andamento Mensile</h3>
           <div class="chart-container" style="height: 400px;">
             <canvas ref="trendsChart"></canvas>
           </div>
         </div>
 
         <!-- Recent Transactions -->
-        <div class="card">
+        <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl">
           <div class="flex justify-between items-center mb-6">
-            <h3 class="text-2xl font-bold text-primary-dark">Transazioni Recenti</h3>
-            <router-link to="/transactions" class="text-accent-blue hover:text-accent-blue-dark font-medium">
+            <h3 class="text-2xl font-bold text-white">Transazioni Recenti</h3>
+            <router-link to="/transactions" class="text-accent-blue-light hover:text-accent-blue font-medium transition-colors">
               Vedi tutte →
             </router-link>
           </div>
           <div class="overflow-x-auto">
             <table class="w-full">
               <thead>
-                <tr class="border-b">
-                  <th class="text-left py-3 px-4">Data</th>
-                  <th class="text-left py-3 px-4">Descrizione</th>
-                  <th class="text-left py-3 px-4">Categoria</th>
-                  <th class="text-right py-3 px-4">Importo</th>
+                <tr class="border-b border-neutral-700">
+                  <th class="text-left py-3 px-4 text-neutral-300 font-semibold">Data</th>
+                  <th class="text-left py-3 px-4 text-neutral-300 font-semibold">Descrizione</th>
+                  <th class="text-left py-3 px-4 text-neutral-300 font-semibold">Categoria</th>
+                  <th class="text-right py-3 px-4 text-neutral-300 font-semibold">Importo</th>
                 </tr>
               </thead>
               <tbody>
                 <tr 
                   v-for="transaction in statistics.recent_transactions" 
                   :key="transaction.id"
-                  class="border-b hover:bg-neutral-50 transition"
+                  class="border-b border-neutral-700 hover:bg-neutral-700/30 transition"
                 >
-                  <td class="py-3 px-4">{{ formatDate(transaction.date) }}</td>
-                  <td class="py-3 px-4">{{ transaction.description || '-' }}</td>
+                  <td class="py-3 px-4 text-neutral-300">{{ formatDate(transaction.date) }}</td>
+                  <td class="py-3 px-4 text-neutral-300">{{ transaction.description || '-' }}</td>
                   <td class="py-3 px-4">
-                    <span class="px-2 py-1 rounded text-sm font-medium" :class="transaction.type === 'income' ? 'bg-success-light/10 text-success-dark' : 'bg-error-light/10 text-error-dark'">
+                    <span class="px-2 py-1 rounded text-sm font-medium" :class="transaction.type === 'income' ? 'bg-success-light/20 text-success-light' : 'bg-error-light/20 text-error-light'">
                       {{ transaction.category_name || 'Altro' }}
                     </span>
                   </td>
-                  <td class="py-3 px-4 text-right font-semibold" :class="transaction.type === 'income' ? 'text-success' : 'text-error'">
+                  <td class="py-3 px-4 text-right font-semibold" :class="transaction.type === 'income' ? 'text-success-light' : 'text-error-light'">
                     {{ transaction.type === 'income' ? '+' : '-' }}€ {{ formatNumber(transaction.amount) }}
                   </td>
                 </tr>

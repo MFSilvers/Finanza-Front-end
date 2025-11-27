@@ -1,40 +1,40 @@
 <template>
-  <div class="comparison-page min-h-screen bg-neutral-50 py-8">
+  <div class="comparison-page min-h-screen bg-gradient-to-br from-neutral-900 via-neutral-800 to-primary-dark py-8">
     <div class="container mx-auto px-4">
       <div class="mb-8">
-        <h1 class="text-4xl font-bold text-primary-dark mb-4">Confronto e Esportazione</h1>
+        <h1 class="text-4xl font-bold text-white mb-4">Confronto e Esportazione</h1>
         
         <!-- Comparison Filters -->
-        <div class="card mb-6">
-          <h3 class="text-xl font-bold mb-4 text-primary-dark">Seleziona Periodi da Confrontare</h3>
+        <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl mb-6">
+          <h3 class="text-xl font-bold mb-4 text-white">Seleziona Periodi da Confrontare</h3>
           
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Period 1 -->
-            <div class="border-2 border-accent-blue/30 rounded-lg p-4 bg-accent-blue/5">
-              <h4 class="font-semibold mb-3 text-accent-blue-dark">Periodo 1</h4>
+            <div class="border-2 border-accent-blue/30 rounded-lg p-4 bg-accent-blue/10">
+              <h4 class="font-semibold mb-3 text-accent-blue-light">Periodo 1</h4>
               <div class="space-y-3">
                 <div>
-                  <label class="label">Data Inizio</label>
-                  <input v-model="period1.start" type="date" class="input-field" />
+                  <label class="block text-sm font-medium text-neutral-300 mb-2">Data Inizio</label>
+                  <input v-model="period1.start" type="date" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white" />
                 </div>
                 <div>
-                  <label class="label">Data Fine</label>
-                  <input v-model="period1.end" type="date" class="input-field" />
+                  <label class="block text-sm font-medium text-neutral-300 mb-2">Data Fine</label>
+                  <input v-model="period1.end" type="date" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white" />
                 </div>
               </div>
             </div>
 
             <!-- Period 2 -->
-            <div class="border-2 border-success-light/30 rounded-lg p-4 bg-success-light/5">
-              <h4 class="font-semibold mb-3 text-success-dark">Periodo 2</h4>
+            <div class="border-2 border-success-light/30 rounded-lg p-4 bg-success-light/10">
+              <h4 class="font-semibold mb-3 text-success-light">Periodo 2</h4>
               <div class="space-y-3">
                 <div>
-                  <label class="label">Data Inizio</label>
-                  <input v-model="period2.start" type="date" class="input-field" />
+                  <label class="block text-sm font-medium text-neutral-300 mb-2">Data Inizio</label>
+                  <input v-model="period2.start" type="date" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white" />
                 </div>
                 <div>
-                  <label class="label">Data Fine</label>
-                  <input v-model="period2.end" type="date" class="input-field" />
+                  <label class="block text-sm font-medium text-neutral-300 mb-2">Data Fine</label>
+                  <input v-model="period2.end" type="date" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white" />
                 </div>
               </div>
             </div>
@@ -69,19 +69,19 @@
       <div v-else-if="stats1 && stats2" class="space-y-6">
         <!-- Summary Comparison Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="card">
-            <h3 class="text-lg font-semibold text-neutral-700 mb-4">Saldo</h3>
+          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl">
+            <h3 class="text-lg font-semibold text-neutral-300 mb-4">Saldo</h3>
             <div class="space-y-2">
               <div class="flex justify-between items-center">
-                <span class="text-accent-blue font-medium">Periodo 1:</span>
-                <span class="font-bold text-xl text-primary-dark">€ {{ formatNumber(stats1.balance) }}</span>
+                <span class="text-accent-blue-light font-medium">Periodo 1:</span>
+                <span class="font-bold text-xl text-white">€ {{ formatNumber(stats1.balance) }}</span>
               </div>
               <div class="flex justify-between items-center">
-                <span class="text-success font-medium">Periodo 2:</span>
-                <span class="font-bold text-xl text-primary-dark">€ {{ formatNumber(stats2.balance) }}</span>
+                <span class="text-success-light font-medium">Periodo 2:</span>
+                <span class="font-bold text-xl text-white">€ {{ formatNumber(stats2.balance) }}</span>
               </div>
-              <div class="border-t border-neutral-200 pt-2 flex justify-between items-center">
-                <span class="text-neutral-600">Differenza:</span>
+              <div class="border-t border-neutral-700 pt-2 flex justify-between items-center">
+                <span class="text-neutral-300">Differenza:</span>
                 <span class="font-bold text-xl" :class="getDifferenceClass(stats2.balance - stats1.balance)">
                   {{ formatDifference(stats2.balance - stats1.balance) }}
                 </span>
@@ -89,19 +89,19 @@
             </div>
           </div>
 
-          <div class="card">
-            <h3 class="text-lg font-semibold text-neutral-700 mb-4">Entrate</h3>
+          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl">
+            <h3 class="text-lg font-semibold text-neutral-300 mb-4">Entrate</h3>
             <div class="space-y-2">
               <div class="flex justify-between items-center">
-                <span class="text-accent-blue font-medium">Periodo 1:</span>
-                <span class="font-bold text-xl text-primary-dark">€ {{ formatNumber(stats1.total_income) }}</span>
+                <span class="text-accent-blue-light font-medium">Periodo 1:</span>
+                <span class="font-bold text-xl text-white">€ {{ formatNumber(stats1.total_income) }}</span>
               </div>
               <div class="flex justify-between items-center">
-                <span class="text-success font-medium">Periodo 2:</span>
-                <span class="font-bold text-xl text-primary-dark">€ {{ formatNumber(stats2.total_income) }}</span>
+                <span class="text-success-light font-medium">Periodo 2:</span>
+                <span class="font-bold text-xl text-white">€ {{ formatNumber(stats2.total_income) }}</span>
               </div>
-              <div class="border-t border-neutral-200 pt-2 flex justify-between items-center">
-                <span class="text-neutral-600">Differenza:</span>
+              <div class="border-t border-neutral-700 pt-2 flex justify-between items-center">
+                <span class="text-neutral-300">Differenza:</span>
                 <span class="font-bold text-xl" :class="getDifferenceClass(stats2.total_income - stats1.total_income)">
                   {{ formatDifference(stats2.total_income - stats1.total_income) }}
                 </span>
@@ -109,19 +109,19 @@
             </div>
           </div>
 
-          <div class="card">
-            <h3 class="text-lg font-semibold text-neutral-700 mb-4">Spese</h3>
+          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl">
+            <h3 class="text-lg font-semibold text-neutral-300 mb-4">Spese</h3>
             <div class="space-y-2">
               <div class="flex justify-between items-center">
-                <span class="text-accent-blue font-medium">Periodo 1:</span>
-                <span class="font-bold text-xl text-primary-dark">€ {{ formatNumber(stats1.total_expense) }}</span>
+                <span class="text-accent-blue-light font-medium">Periodo 1:</span>
+                <span class="font-bold text-xl text-white">€ {{ formatNumber(stats1.total_expense) }}</span>
               </div>
               <div class="flex justify-between items-center">
-                <span class="text-success font-medium">Periodo 2:</span>
-                <span class="font-bold text-xl text-primary-dark">€ {{ formatNumber(stats2.total_expense) }}</span>
+                <span class="text-success-light font-medium">Periodo 2:</span>
+                <span class="font-bold text-xl text-white">€ {{ formatNumber(stats2.total_expense) }}</span>
               </div>
-              <div class="border-t border-neutral-200 pt-2 flex justify-between items-center">
-                <span class="text-neutral-600">Differenza:</span>
+              <div class="border-t border-neutral-700 pt-2 flex justify-between items-center">
+                <span class="text-neutral-300">Differenza:</span>
                 <span class="font-bold text-xl" :class="getDifferenceClass(stats1.total_expense - stats2.total_expense)">
                   {{ formatDifference(stats2.total_expense - stats1.total_expense) }}
                 </span>
@@ -132,15 +132,15 @@
 
         <!-- Charts Comparison -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div class="card">
-            <h3 class="text-2xl font-bold mb-6 text-accent-blue">Periodo 1</h3>
+          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl">
+            <h3 class="text-2xl font-bold mb-6 text-accent-blue-light">Periodo 1</h3>
             <div class="chart-container" style="height: 350px;">
               <canvas ref="chart1"></canvas>
             </div>
           </div>
 
-          <div class="card">
-            <h3 class="text-2xl font-bold mb-6 text-success">Periodo 2</h3>
+          <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl">
+            <h3 class="text-2xl font-bold mb-6 text-success-light">Periodo 2</h3>
             <div class="chart-container" style="height: 350px;">
               <canvas ref="chart2"></canvas>
             </div>
@@ -148,8 +148,8 @@
         </div>
 
         <!-- Combined Chart -->
-        <div class="card">
-          <h3 class="text-2xl font-bold mb-6 text-primary-dark">Confronto Entrate vs Spese</h3>
+        <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl">
+          <h3 class="text-2xl font-bold mb-6 text-white">Confronto Entrate vs Spese</h3>
           <div class="chart-container" style="height: 400px;">
             <canvas ref="combinedChart"></canvas>
           </div>
@@ -246,7 +246,7 @@ const formatDifference = (value) => {
 }
 
 const getDifferenceClass = (value) => {
-  return value >= 0 ? 'text-success' : 'text-error'
+  return value >= 0 ? 'text-success-light' : 'text-error-light'
 }
 
 const loadComparison = async () => {

@@ -1,8 +1,8 @@
 <template>
-  <div class="transactions-page min-h-screen bg-neutral-50 py-8">
+  <div class="transactions-page min-h-screen bg-gradient-to-br from-neutral-900 via-neutral-800 to-primary-dark py-8">
     <div class="container mx-auto px-4">
       <div class="mb-8">
-        <h1 class="text-4xl font-bold text-primary-dark mb-4">Transazioni</h1>
+        <h1 class="text-4xl font-bold text-white mb-4">Transazioni</h1>
         
         <!-- Add Transaction Button -->
         <button @click="openAddModal" class="btn-primary mb-6">
@@ -10,32 +10,32 @@
         </button>
 
         <!-- Filters -->
-        <div class="card mb-6">
+        <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl mb-6">
           <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
-              <label class="label">Tipo</label>
-              <select v-model="filters.type" class="input-field">
-                <option value="">Tutti</option>
-                <option value="income">Entrate</option>
-                <option value="expense">Spese</option>
+              <label class="block text-sm font-medium text-neutral-300 mb-2">Tipo</label>
+              <select v-model="filters.type" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white">
+                <option value="" class="bg-neutral-800">Tutti</option>
+                <option value="income" class="bg-neutral-800">Entrate</option>
+                <option value="expense" class="bg-neutral-800">Spese</option>
               </select>
             </div>
             <div>
-              <label class="label">Categoria</label>
-              <select v-model="filters.category_id" class="input-field">
-                <option value="">Tutte</option>
-                <option v-for="cat in categories" :key="cat.id" :value="cat.id">
+              <label class="block text-sm font-medium text-neutral-300 mb-2">Categoria</label>
+              <select v-model="filters.category_id" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white">
+                <option value="" class="bg-neutral-800">Tutte</option>
+                <option v-for="cat in categories" :key="cat.id" :value="cat.id" class="bg-neutral-800">
                   {{ cat.name }}
                 </option>
               </select>
             </div>
             <div>
-              <label class="label">Data Inizio</label>
-              <input v-model="filters.start_date" type="date" class="input-field" />
+              <label class="block text-sm font-medium text-neutral-300 mb-2">Data Inizio</label>
+              <input v-model="filters.start_date" type="date" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white" />
             </div>
             <div>
-              <label class="label">Data Fine</label>
-              <input v-model="filters.end_date" type="date" class="input-field" />
+              <label class="block text-sm font-medium text-neutral-300 mb-2">Data Fine</label>
+              <input v-model="filters.end_date" type="date" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white" />
             </div>
           </div>
           <div class="flex gap-4 mt-4">
@@ -51,43 +51,43 @@
       </div>
 
       <!-- Transactions List -->
-      <div v-else class="card">
+      <div v-else class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl">
         <div class="overflow-x-auto">
           <table class="w-full">
             <thead>
-              <tr class="border-b">
-                <th class="text-left py-3 px-4">Data</th>
-                <th class="text-left py-3 px-4">Tipo</th>
-                <th class="text-left py-3 px-4">Categoria</th>
-                <th class="text-left py-3 px-4">Descrizione</th>
-                <th class="text-left py-3 px-4">Ricorrenza</th>
-                <th class="text-right py-3 px-4">Importo</th>
-                <th class="text-center py-3 px-4">Azioni</th>
+              <tr class="border-b border-neutral-700">
+                <th class="text-left py-3 px-4 text-neutral-300 font-semibold">Data</th>
+                <th class="text-left py-3 px-4 text-neutral-300 font-semibold">Tipo</th>
+                <th class="text-left py-3 px-4 text-neutral-300 font-semibold">Categoria</th>
+                <th class="text-left py-3 px-4 text-neutral-300 font-semibold">Descrizione</th>
+                <th class="text-left py-3 px-4 text-neutral-300 font-semibold">Ricorrenza</th>
+                <th class="text-right py-3 px-4 text-neutral-300 font-semibold">Importo</th>
+                <th class="text-center py-3 px-4 text-neutral-300 font-semibold">Azioni</th>
               </tr>
             </thead>
             <tbody>
               <tr 
                 v-for="transaction in transactions" 
                 :key="transaction.id"
-                class="border-b hover:bg-neutral-50 transition"
+                class="border-b border-neutral-700 hover:bg-neutral-700/30 transition"
               >
-                <td class="py-3 px-4">{{ formatDate(transaction.date) }}</td>
+                <td class="py-3 px-4 text-neutral-300">{{ formatDate(transaction.date) }}</td>
                 <td class="py-3 px-4">
                   <span 
                     class="px-2 py-1 rounded text-sm font-semibold"
-                    :class="transaction.type === 'income' ? 'bg-success-light/10 text-success-dark' : 'bg-error-light/10 text-error-dark'"
+                    :class="transaction.type === 'income' ? 'bg-success-light/20 text-success-light' : 'bg-error-light/20 text-error-light'"
                   >
                     {{ transaction.type === 'income' ? 'Entrata' : 'Spesa' }}
                   </span>
                 </td>
-                <td class="py-3 px-4">{{ transaction.category_name || 'Altro' }}</td>
-                <td class="py-3 px-4">{{ transaction.description || '-' }}</td>
+                <td class="py-3 px-4 text-neutral-300">{{ transaction.category_name || 'Altro' }}</td>
+                <td class="py-3 px-4 text-neutral-300">{{ transaction.description || '-' }}</td>
                 <td class="py-3 px-4">
-                  <span class="text-sm text-gray-600">
+                  <span class="text-sm text-neutral-400">
                     {{ getRecurringLabel(transaction.recurring_rule) }}
                   </span>
                 </td>
-                <td class="py-3 px-4 text-right font-bold" :class="transaction.type === 'income' ? 'text-success' : 'text-error'">
+                <td class="py-3 px-4 text-right font-bold" :class="transaction.type === 'income' ? 'text-success-light' : 'text-error-light'">
                   {{ transaction.type === 'income' ? '+' : '-' }}€ {{ formatNumber(transaction.amount) }}
                 </td>
                 <td class="py-3 px-4">
@@ -116,7 +116,7 @@
             :key="page"
             @click="goToPage(page)"
             class="px-4 py-2 rounded"
-            :class="page === pagination.page ? 'bg-accent-blue text-white' : 'bg-neutral-200 hover:bg-neutral-300 text-neutral-700'"
+            :class="page === pagination.page ? 'bg-accent-blue text-white' : 'bg-neutral-700/50 hover:bg-neutral-700 text-neutral-300 border border-neutral-600'"
           >
             {{ page }}
           </button>
@@ -125,10 +125,10 @@
     </div>
 
     <!-- Add/Edit Modal -->
-    <div v-if="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div class="card max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    <div v-if="showModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div class="bg-neutral-800 border border-neutral-700 rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6">
         <div class="flex justify-between items-center mb-6">
-          <h2 class="text-2xl font-bold text-primary-dark">
+          <h2 class="text-2xl font-bold text-white">
             {{ editingTransaction ? 'Modifica Transazione' : 'Nuova Transazione' }}
           </h2>
           <button @click="closeModal" class="text-neutral-500 hover:text-neutral-700 transition-colors" title="Chiudi">
@@ -141,43 +141,44 @@
         <form @submit.prevent="saveTransaction" class="space-y-4">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label class="label">Tipo *</label>
-              <select v-model="formData.type" required class="input-field">
-                <option value="income">Entrata</option>
-                <option value="expense">Spesa</option>
+              <label class="block text-sm font-medium text-neutral-300 mb-2">Tipo *</label>
+              <select v-model="formData.type" required class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white">
+                <option value="income" class="bg-neutral-800">Entrata</option>
+                <option value="expense" class="bg-neutral-800">Spesa</option>
               </select>
             </div>
 
             <div>
-              <label class="label">Importo * (€)</label>
+              <label class="block text-sm font-medium text-neutral-300 mb-2">Importo * (€)</label>
               <input 
                 v-model.number="formData.amount" 
                 type="number" 
                 step="0.01" 
                 required 
-                class="input-field"
+                class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white placeholder-neutral-400"
                 placeholder="0.00"
               />
             </div>
 
             <div>
-              <label class="label">Data *</label>
+              <label class="block text-sm font-medium text-neutral-300 mb-2">Data *</label>
               <input 
                 v-model="formData.date" 
                 type="date" 
                 required 
-                class="input-field"
+                class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white"
               />
             </div>
 
             <div>
-              <label class="label">Categoria</label>
-              <select v-model="formData.category_id" class="input-field">
-                <option value="">Nessuna</option>
+              <label class="block text-sm font-medium text-neutral-300 mb-2">Categoria</label>
+              <select v-model="formData.category_id" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white">
+                <option value="" class="bg-neutral-800">Nessuna</option>
                 <option 
                   v-for="cat in filteredCategories" 
                   :key="cat.id" 
                   :value="cat.id"
+                  class="bg-neutral-800"
                 >
                   {{ cat.name }}
                 </option>
@@ -185,32 +186,32 @@
             </div>
 
             <div>
-              <label class="label">Ricorrenza</label>
-              <select v-model="formData.recurring_rule" class="input-field">
-                <option value="single">Singola</option>
-                <option value="daily">Giornaliera</option>
-                <option value="weekly">Settimanale</option>
-                <option value="monthly">Mensile</option>
-                <option value="yearly">Annuale</option>
+              <label class="block text-sm font-medium text-neutral-300 mb-2">Ricorrenza</label>
+              <select v-model="formData.recurring_rule" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white">
+                <option value="single" class="bg-neutral-800">Singola</option>
+                <option value="daily" class="bg-neutral-800">Giornaliera</option>
+                <option value="weekly" class="bg-neutral-800">Settimanale</option>
+                <option value="monthly" class="bg-neutral-800">Mensile</option>
+                <option value="yearly" class="bg-neutral-800">Annuale</option>
               </select>
             </div>
 
             <div>
-              <label class="label">Valuta</label>
+              <label class="block text-sm font-medium text-neutral-300 mb-2">Valuta</label>
               <input 
                 v-model="formData.currency" 
                 type="text" 
-                class="input-field"
+                class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white placeholder-neutral-400"
                 placeholder="EUR"
               />
             </div>
           </div>
 
           <div>
-            <label class="label">Descrizione</label>
+            <label class="block text-sm font-medium text-neutral-300 mb-2">Descrizione</label>
             <textarea 
               v-model="formData.description" 
-              class="input-field"
+              class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white placeholder-neutral-400"
               rows="3"
               placeholder="Descrizione opzionale..."
             ></textarea>
