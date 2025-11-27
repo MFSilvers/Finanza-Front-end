@@ -178,7 +178,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, nextTick } from 'vue'
+import { ref, onMounted, watch, nextTick, watchEffect } from 'vue'
 import { useTransactionsStore } from '../stores/transactions'
 import { Chart, registerables } from 'chart.js'
 
@@ -209,6 +209,25 @@ const formatDate = (date) => {
   return new Date(date).toLocaleDateString('it-IT')
 }
 
+const waitForCanvas = (ref, maxAttempts = 20, delay = 100) => {
+  return new Promise((resolve, reject) => {
+    let attempts = 0
+    const checkCanvas = () => {
+      attempts++
+      if (ref.value) {
+        console.log(`✅ [Dashboard] Canvas trovato dopo ${attempts} tentativi`)
+        resolve(ref.value)
+      } else if (attempts >= maxAttempts) {
+        console.warn(`⚠️ [Dashboard] Canvas non trovato dopo ${maxAttempts} tentativi`)
+        reject(new Error('Canvas non disponibile'))
+      } else {
+        setTimeout(checkCanvas, delay)
+      }
+    }
+    checkCanvas()
+  })
+}
+
 const loadStatistics = async () => {
   loading.value = true
   try {
@@ -220,9 +239,27 @@ const loadStatistics = async () => {
     console.log('📈 [Dashboard] Income by category:', statistics.value?.income_by_category)
     console.log('📈 [Dashboard] Monthly trends:', statistics.value?.monthly_trends)
     
+    // Aspetta che il DOM sia aggiornato
     await nextTick()
-    console.log('⏳ [Dashboard] NextTick completato, rendering grafici...')
-    renderCharts()
+    console.log('⏳ [Dashboard] NextTick completato, attesa canvas...')
+    
+    // Aspetta che i canvas siano disponibili nel DOM
+    try {
+      await Promise.all([
+        waitForCanvas(expensesCategoryChart).catch(() => null),
+        waitForCanvas(incomeCategoryChart).catch(() => null),
+        waitForCanvas(trendsChart).catch(() => null)
+      ])
+      console.log('✅ [Dashboard] Canvas disponibili, rendering grafici...')
+      renderCharts()
+    } catch (error) {
+      console.error('❌ [Dashboard] Errore nell\'attesa dei canvas:', error)
+      // Prova comunque a renderizzare dopo un breve delay
+      setTimeout(() => {
+        console.log('🔄 [Dashboard] Retry rendering grafici...')
+        renderCharts()
+      }, 500)
+    }
   } catch (error) {
     console.error('❌ [Dashboard] Errore nel caricamento statistiche:', error)
     console.error('❌ [Dashboard] Dettagli errore:', error.response?.data || error.message)
@@ -486,6 +523,19 @@ const renderCharts = () => {
   
   console.log('🎨 [Dashboard] Rendering grafici completato')
 }
+
+// Watch per renderizzare i grafici quando i canvas sono disponibili
+watchEffect(() => {
+  if (statistics.value && !loading.value) {
+    // Aspetta un po' per assicurarsi che il DOM sia aggiornato
+    setTimeout(() => {
+      if (expensesCategoryChart.value || incomeCategoryChart.value || trendsChart.value) {
+        console.log('🔄 [Dashboard] WatchEffect: Canvas disponibili, rendering grafici...')
+        renderCharts()
+      }
+    }, 100)
+  }
+})
 
 onMounted(() => {
   console.log('🚀 [Dashboard] Componente montato')
