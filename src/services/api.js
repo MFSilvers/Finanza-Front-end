@@ -28,7 +28,6 @@ api.interceptors.response.use(
   (error) => {
     // Gestione errori di rete
     if (!error.response) {
-      console.error('Errore di rete:', error.message)
       return Promise.reject(new Error('Errore di connessione. Verifica che il server backend sia avviato.'))
     }
 
@@ -44,10 +43,8 @@ api.interceptors.response.use(
         window.location.href = '/login'
       }
     } else if (status === 404) {
-      console.error('Endpoint non trovato:', error.config?.url)
       return Promise.reject(new Error('Endpoint non trovato. Verifica la configurazione dell\'API.'))
     } else if (status >= 500) {
-      console.error('Errore del server:', message)
       return Promise.reject(new Error('Errore del server. Riprova più tardi.'))
     }
 

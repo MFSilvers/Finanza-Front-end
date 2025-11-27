@@ -276,7 +276,6 @@ const loadComparison = async () => {
     await nextTick()
     renderCharts()
   } catch (error) {
-    console.error('Error loading comparison:', error)
     alert('Errore durante il caricamento dei dati')
   } finally {
     loading.value = false
@@ -396,7 +395,6 @@ const exportToExcel = async () => {
     // Export
     XLSX.writeFile(wb, `confronto-finanze-${Date.now()}.xlsx`)
   } catch (error) {
-    console.error('Error exporting to Excel:', error)
     alert('Errore durante l\'esportazione Excel')
   }
 }
@@ -427,7 +425,6 @@ const exportToPDF = async () => {
     pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight)
     pdf.save(`confronto-finanze-${Date.now()}.pdf`)
   } catch (error) {
-    console.error('Error exporting to PDF:', error)
     alert('Errore durante l\'esportazione PDF')
   }
 }

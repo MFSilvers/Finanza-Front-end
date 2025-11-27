@@ -239,16 +239,10 @@ const waitForCanvas = (ref, maxAttempts = 30, delay = 50) => {
     const checkCanvas = () => {
       attempts++
       if (ref.value && ref.value.offsetParent !== null) {
-        console.log(`✅ [Dashboard] Canvas trovato dopo ${attempts} tentativi`)
         resolve(ref.value)
       } else if (attempts >= maxAttempts) {
-        console.warn(`⚠️ [Dashboard] Canvas non trovato dopo ${maxAttempts} tentativi`, {
-          refExists: !!ref.value,
-          isVisible: ref.value?.offsetParent !== null
-        })
         // Prova comunque a risolvere se il ref esiste, anche se non è visibile
         if (ref.value) {
-          console.log('⚠️ [Dashboard] Canvas esiste ma potrebbe non essere visibile, procedo comunque')
           resolve(ref.value)
         } else {
           reject(new Error('Canvas non disponibile'))
@@ -267,18 +261,12 @@ const waitForCanvas = (ref, maxAttempts = 30, delay = 50) => {
 const loadStatistics = async () => {
   loading.value = true
   try {
-    console.log('📊 [Dashboard] Caricamento statistiche...')
     await transactionsStore.fetchStatistics(filters.value)
     statistics.value = transactionsStore.statistics
-    console.log('✅ [Dashboard] Statistiche caricate:', statistics.value)
-    console.log('📈 [Dashboard] Expenses by category:', statistics.value?.expenses_by_category)
-    console.log('📈 [Dashboard] Income by category:', statistics.value?.income_by_category)
-    console.log('📈 [Dashboard] Monthly trends:', statistics.value?.monthly_trends)
     
     // Aspetta che il DOM sia aggiornato - usa multiple nextTick per assicurarsi
     await nextTick()
     await nextTick()
-    console.log('⏳ [Dashboard] NextTick completato, attesa canvas...')
     
     // Usa requestAnimationFrame per aspettare che il browser completi il rendering
     await new Promise(resolve => requestAnimationFrame(resolve))
@@ -286,28 +274,22 @@ const loadStatistics = async () => {
     
     // Aspetta che i canvas siano disponibili nel DOM
     try {
-      const results = await Promise.allSettled([
+      await Promise.allSettled([
         waitForCanvas(expensesCategoryChart),
         waitForCanvas(incomeCategoryChart),
         waitForCanvas(trendsChart)
       ])
       
-      const found = results.filter(r => r.status === 'fulfilled').length
-      console.log(`✅ [Dashboard] ${found}/3 canvas trovati, rendering grafici...`)
-      
       // Renderizza anche se non tutti i canvas sono disponibili
       renderCharts()
     } catch (error) {
-      console.error('❌ [Dashboard] Errore nell\'attesa dei canvas:', error)
       // Prova comunque a renderizzare dopo un breve delay
       setTimeout(() => {
-        console.log('🔄 [Dashboard] Retry rendering grafici...')
         renderCharts()
       }, 300)
     }
   } catch (error) {
-    console.error('❌ [Dashboard] Errore nel caricamento statistiche:', error)
-    console.error('❌ [Dashboard] Dettagli errore:', error.response?.data || error.message)
+    // Errore nel caricamento statistiche
   } finally {
     loading.value = false
   }
@@ -326,46 +308,31 @@ const clearFilters = () => {
 }
 
 const renderCharts = () => {
-  console.log('🎨 [Dashboard] Inizio rendering grafici...')
-  console.log('📊 [Dashboard] Statistics:', statistics.value)
-  
   if (!statistics.value) {
-    console.warn('⚠️ [Dashboard] Nessuna statistica disponibile')
     return
   }
 
   // Verifica che Chart.js sia disponibile
   if (typeof Chart === 'undefined') {
-    console.error('❌ [Dashboard] Chart.js non è disponibile!')
     return
   }
-  console.log('✅ [Dashboard] Chart.js disponibile')
 
   // Destroy existing charts
   if (expensesChart) {
-    console.log('🗑️ [Dashboard] Distruzione grafico spese esistente')
     expensesChart.destroy()
   }
   if (incomeChart) {
-    console.log('🗑️ [Dashboard] Distruzione grafico entrate esistente')
     incomeChart.destroy()
   }
   if (trendsChartInstance) {
-    console.log('🗑️ [Dashboard] Distruzione grafico trend esistente')
     trendsChartInstance.destroy()
   }
 
   // Expenses by Category Chart
-  console.log('📊 [Dashboard] Verifica canvas spese:', expensesCategoryChart.value)
-  console.log('📊 [Dashboard] Dati spese:', statistics.value.expenses_by_category)
-  
   if (expensesCategoryChart.value && statistics.value.expenses_by_category && statistics.value.expenses_by_category.length > 0) {
-    console.log('✅ [Dashboard] Creazione grafico spese per categoria...')
     try {
       const labels = statistics.value.expenses_by_category.map(c => c.name || 'Altro')
       const data = statistics.value.expenses_by_category.map(c => c.total)
-      console.log('📊 [Dashboard] Labels spese:', labels)
-      console.log('📊 [Dashboard] Data spese:', data)
       
       expensesChart = new Chart(expensesCategoryChart.value, {
         type: 'doughnut',
@@ -395,30 +362,14 @@ const renderCharts = () => {
           }
         }
       })
-      console.log('✅ [Dashboard] Grafico spese creato con successo')
     } catch (error) {
-      console.error('❌ [Dashboard] Errore nella creazione del grafico spese:', error)
+      // Errore nella creazione del grafico spese
     }
-  } else {
-    console.warn('⚠️ [Dashboard] Impossibile creare grafico spese:', {
-      canvas: !!expensesCategoryChart.value,
-      hasData: statistics.value.expenses_by_category?.length > 0,
-      dataLength: statistics.value.expenses_by_category?.length || 0
-    })
   }
 
   // Income by Category Chart
-  console.log('📊 [Dashboard] Verifica canvas entrate:', incomeCategoryChart.value)
-  console.log('📊 [Dashboard] Dati entrate:', statistics.value.income_by_category)
-  
   if (incomeCategoryChart.value && statistics.value.income_by_category && statistics.value.income_by_category.length > 0) {
-    console.log('✅ [Dashboard] Creazione grafico entrate per categoria...')
     try {
-      const labels = statistics.value.income_by_category.map(c => c.name || 'Altro')
-      const data = statistics.value.income_by_category.map(c => c.total)
-      console.log('📊 [Dashboard] Labels entrate:', labels)
-      console.log('📊 [Dashboard] Data entrate:', data)
-      
       incomeChart = new Chart(incomeCategoryChart.value, {
       type: 'bar',
       data: {
@@ -464,31 +415,17 @@ const renderCharts = () => {
         }
       }
     })
-    console.log('✅ [Dashboard] Grafico entrate creato con successo')
     } catch (error) {
-      console.error('❌ [Dashboard] Errore nella creazione del grafico entrate:', error)
+      // Errore nella creazione del grafico entrate
     }
-  } else {
-    console.warn('⚠️ [Dashboard] Impossibile creare grafico entrate:', {
-      canvas: !!incomeCategoryChart.value,
-      hasData: statistics.value.income_by_category?.length > 0,
-      dataLength: statistics.value.income_by_category?.length || 0
-    })
   }
 
   // Monthly Trends Chart
-  console.log('📊 [Dashboard] Verifica canvas trend:', trendsChart.value)
-  console.log('📊 [Dashboard] Dati trend:', statistics.value.monthly_trends)
-  
   if (trendsChart.value && statistics.value.monthly_trends && statistics.value.monthly_trends.length > 0) {
-    console.log('✅ [Dashboard] Creazione grafico trend mensile...')
     try {
       const labels = statistics.value.monthly_trends.map(t => t.month)
       const incomeData = statistics.value.monthly_trends.map(t => t.income)
       const expenseData = statistics.value.monthly_trends.map(t => t.expense)
-      console.log('📊 [Dashboard] Labels trend:', labels)
-      console.log('📊 [Dashboard] Data entrate trend:', incomeData)
-      console.log('📊 [Dashboard] Data spese trend:', expenseData)
       
       trendsChartInstance = new Chart(trendsChart.value, {
       type: 'line',
@@ -554,19 +491,10 @@ const renderCharts = () => {
         }
       }
     })
-    console.log('✅ [Dashboard] Grafico trend creato con successo')
     } catch (error) {
-      console.error('❌ [Dashboard] Errore nella creazione del grafico trend:', error)
+      // Errore nella creazione del grafico trend
     }
-  } else {
-    console.warn('⚠️ [Dashboard] Impossibile creare grafico trend:', {
-      canvas: !!trendsChart.value,
-      hasData: statistics.value.monthly_trends?.length > 0,
-      dataLength: statistics.value.monthly_trends?.length || 0
-    })
   }
-  
-  console.log('🎨 [Dashboard] Rendering grafici completato')
 }
 
 // Watch per renderizzare i grafici quando i canvas sono disponibili
@@ -577,15 +505,8 @@ watch([statistics, expensesCategoryChart, incomeCategoryChart, trendsChart], () 
       requestAnimationFrame(() => {
         const hasCanvas = expensesCategoryChart.value || incomeCategoryChart.value || trendsChart.value
         if (hasCanvas) {
-          console.log('🔄 [Dashboard] Watch: Canvas disponibili, rendering grafici...')
-          console.log('📊 [Dashboard] Canvas refs:', {
-            expenses: !!expensesCategoryChart.value,
-            income: !!incomeCategoryChart.value,
-            trends: !!trendsChart.value
-          })
           renderCharts()
         } else {
-          console.log('⏳ [Dashboard] Watch: Canvas non ancora disponibili, riprovo tra poco...')
           // Retry dopo un breve delay
           setTimeout(() => {
             if (statistics.value && !loading.value) {
@@ -599,9 +520,6 @@ watch([statistics, expensesCategoryChart, incomeCategoryChart, trendsChart], () 
 }, { flush: 'post', immediate: false })
 
 onMounted(() => {
-  console.log('🚀 [Dashboard] Componente montato')
-  console.log('📊 [Dashboard] Chart.js disponibile:', typeof Chart !== 'undefined')
-  console.log('📊 [Dashboard] Chart version:', Chart?.version || 'N/A')
   loadStatistics()
 })
 </script>

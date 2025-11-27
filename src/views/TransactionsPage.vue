@@ -331,7 +331,7 @@ const loadData = async () => {
     await transactionsStore.fetchCategories()
     await transactionsStore.fetchTransactions(filters.value)
   } catch (error) {
-    console.error('Error loading data:', error)
+    // Errore nel caricamento dati
   } finally {
     loading.value = false
   }
@@ -408,7 +408,6 @@ const saveTransaction = async () => {
     closeModal()
     await loadData()
   } catch (error) {
-    console.error('Error saving transaction:', error)
     alert('Errore durante il salvataggio')
   } finally {
     saving.value = false
@@ -424,7 +423,6 @@ const deleteTransaction = async (id) => {
     await transactionsStore.deleteTransaction(id)
     await loadData()
   } catch (error) {
-    console.error('Error deleting transaction:', error)
     alert('Errore durante l\'eliminazione')
   }
 }
