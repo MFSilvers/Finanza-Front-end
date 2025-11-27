@@ -104,6 +104,9 @@
             <h3 class="text-2xl font-bold mb-6 text-white">Spese per Categoria</h3>
             <div class="chart-container" style="height: 350px;">
               <canvas ref="expensesCategoryChart"></canvas>
+              <div v-if="!statistics?.expenses_by_category || statistics.expenses_by_category.length === 0" class="flex items-center justify-center h-full text-neutral-400">
+                <p>Nessun dato disponibile per le spese</p>
+              </div>
             </div>
           </div>
 
@@ -112,6 +115,9 @@
             <h3 class="text-2xl font-bold mb-6 text-white">Entrate per Categoria</h3>
             <div class="chart-container" style="height: 350px;">
               <canvas ref="incomeCategoryChart"></canvas>
+              <div v-if="!statistics?.income_by_category || statistics.income_by_category.length === 0" class="flex items-center justify-center h-full text-neutral-400">
+                <p>Nessun dato disponibile per le entrate</p>
+              </div>
             </div>
           </div>
         </div>
@@ -121,6 +127,9 @@
           <h3 class="text-2xl font-bold mb-6 text-white">Andamento Mensile</h3>
           <div class="chart-container" style="height: 400px;">
             <canvas ref="trendsChart"></canvas>
+            <div v-if="!statistics?.monthly_trends || statistics.monthly_trends.length === 0" class="flex items-center justify-center h-full text-neutral-400">
+              <p>Nessun dato disponibile per i trend mensili</p>
+            </div>
           </div>
         </div>
 
@@ -203,12 +212,20 @@ const formatDate = (date) => {
 const loadStatistics = async () => {
   loading.value = true
   try {
+    console.log('📊 [Dashboard] Caricamento statistiche...')
     await transactionsStore.fetchStatistics(filters.value)
     statistics.value = transactionsStore.statistics
+    console.log('✅ [Dashboard] Statistiche caricate:', statistics.value)
+    console.log('📈 [Dashboard] Expenses by category:', statistics.value?.expenses_by_category)
+    console.log('📈 [Dashboard] Income by category:', statistics.value?.income_by_category)
+    console.log('📈 [Dashboard] Monthly trends:', statistics.value?.monthly_trends)
+    
     await nextTick()
+    console.log('⏳ [Dashboard] NextTick completato, rendering grafici...')
     renderCharts()
   } catch (error) {
-    console.error('Error loading statistics:', error)
+    console.error('❌ [Dashboard] Errore nel caricamento statistiche:', error)
+    console.error('❌ [Dashboard] Dettagli errore:', error.response?.data || error.message)
   } finally {
     loading.value = false
   }
@@ -227,48 +244,100 @@ const clearFilters = () => {
 }
 
 const renderCharts = () => {
-  if (!statistics.value) return
+  console.log('🎨 [Dashboard] Inizio rendering grafici...')
+  console.log('📊 [Dashboard] Statistics:', statistics.value)
+  
+  if (!statistics.value) {
+    console.warn('⚠️ [Dashboard] Nessuna statistica disponibile')
+    return
+  }
+
+  // Verifica che Chart.js sia disponibile
+  if (typeof Chart === 'undefined') {
+    console.error('❌ [Dashboard] Chart.js non è disponibile!')
+    return
+  }
+  console.log('✅ [Dashboard] Chart.js disponibile')
 
   // Destroy existing charts
-  if (expensesChart) expensesChart.destroy()
-  if (incomeChart) incomeChart.destroy()
-  if (trendsChartInstance) trendsChartInstance.destroy()
+  if (expensesChart) {
+    console.log('🗑️ [Dashboard] Distruzione grafico spese esistente')
+    expensesChart.destroy()
+  }
+  if (incomeChart) {
+    console.log('🗑️ [Dashboard] Distruzione grafico entrate esistente')
+    incomeChart.destroy()
+  }
+  if (trendsChartInstance) {
+    console.log('🗑️ [Dashboard] Distruzione grafico trend esistente')
+    trendsChartInstance.destroy()
+  }
 
   // Expenses by Category Chart
-  if (expensesCategoryChart.value && statistics.value.expenses_by_category.length > 0) {
-    expensesChart = new Chart(expensesCategoryChart.value, {
-      type: 'doughnut',
-      data: {
-        labels: statistics.value.expenses_by_category.map(c => c.name || 'Altro'),
-        datasets: [{
-          data: statistics.value.expenses_by_category.map(c => c.total),
-          backgroundColor: [
-            '#2563EB', '#059669', '#DC2626', '#64748B', '#7C3AED',
-            '#EA580C', '#0891B2', '#BE185D', '#475569', '#0F172A'
-          ]
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: 'bottom',
-            labels: {
-              color: '#E2E8F0',
-              font: {
-                size: 12
+  console.log('📊 [Dashboard] Verifica canvas spese:', expensesCategoryChart.value)
+  console.log('📊 [Dashboard] Dati spese:', statistics.value.expenses_by_category)
+  
+  if (expensesCategoryChart.value && statistics.value.expenses_by_category && statistics.value.expenses_by_category.length > 0) {
+    console.log('✅ [Dashboard] Creazione grafico spese per categoria...')
+    try {
+      const labels = statistics.value.expenses_by_category.map(c => c.name || 'Altro')
+      const data = statistics.value.expenses_by_category.map(c => c.total)
+      console.log('📊 [Dashboard] Labels spese:', labels)
+      console.log('📊 [Dashboard] Data spese:', data)
+      
+      expensesChart = new Chart(expensesCategoryChart.value, {
+        type: 'doughnut',
+        data: {
+          labels: labels,
+          datasets: [{
+            data: data,
+            backgroundColor: [
+              '#2563EB', '#059669', '#DC2626', '#64748B', '#7C3AED',
+              '#EA580C', '#0891B2', '#BE185D', '#475569', '#0F172A'
+            ]
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                color: '#E2E8F0',
+                font: {
+                  size: 12
+                }
               }
             }
           }
         }
-      }
+      })
+      console.log('✅ [Dashboard] Grafico spese creato con successo')
+    } catch (error) {
+      console.error('❌ [Dashboard] Errore nella creazione del grafico spese:', error)
+    }
+  } else {
+    console.warn('⚠️ [Dashboard] Impossibile creare grafico spese:', {
+      canvas: !!expensesCategoryChart.value,
+      hasData: statistics.value.expenses_by_category?.length > 0,
+      dataLength: statistics.value.expenses_by_category?.length || 0
     })
   }
 
   // Income by Category Chart
-  if (incomeCategoryChart.value && statistics.value.income_by_category.length > 0) {
-    incomeChart = new Chart(incomeCategoryChart.value, {
+  console.log('📊 [Dashboard] Verifica canvas entrate:', incomeCategoryChart.value)
+  console.log('📊 [Dashboard] Dati entrate:', statistics.value.income_by_category)
+  
+  if (incomeCategoryChart.value && statistics.value.income_by_category && statistics.value.income_by_category.length > 0) {
+    console.log('✅ [Dashboard] Creazione grafico entrate per categoria...')
+    try {
+      const labels = statistics.value.income_by_category.map(c => c.name || 'Altro')
+      const data = statistics.value.income_by_category.map(c => c.total)
+      console.log('📊 [Dashboard] Labels entrate:', labels)
+      console.log('📊 [Dashboard] Data entrate:', data)
+      
+      incomeChart = new Chart(incomeCategoryChart.value, {
       type: 'bar',
       data: {
         labels: statistics.value.income_by_category.map(c => c.name || 'Altro'),
@@ -313,18 +382,40 @@ const renderCharts = () => {
         }
       }
     })
+    console.log('✅ [Dashboard] Grafico entrate creato con successo')
+    } catch (error) {
+      console.error('❌ [Dashboard] Errore nella creazione del grafico entrate:', error)
+    }
+  } else {
+    console.warn('⚠️ [Dashboard] Impossibile creare grafico entrate:', {
+      canvas: !!incomeCategoryChart.value,
+      hasData: statistics.value.income_by_category?.length > 0,
+      dataLength: statistics.value.income_by_category?.length || 0
+    })
   }
 
   // Monthly Trends Chart
-  if (trendsChart.value && statistics.value.monthly_trends.length > 0) {
-    trendsChartInstance = new Chart(trendsChart.value, {
+  console.log('📊 [Dashboard] Verifica canvas trend:', trendsChart.value)
+  console.log('📊 [Dashboard] Dati trend:', statistics.value.monthly_trends)
+  
+  if (trendsChart.value && statistics.value.monthly_trends && statistics.value.monthly_trends.length > 0) {
+    console.log('✅ [Dashboard] Creazione grafico trend mensile...')
+    try {
+      const labels = statistics.value.monthly_trends.map(t => t.month)
+      const incomeData = statistics.value.monthly_trends.map(t => t.income)
+      const expenseData = statistics.value.monthly_trends.map(t => t.expense)
+      console.log('📊 [Dashboard] Labels trend:', labels)
+      console.log('📊 [Dashboard] Data entrate trend:', incomeData)
+      console.log('📊 [Dashboard] Data spese trend:', expenseData)
+      
+      trendsChartInstance = new Chart(trendsChart.value, {
       type: 'line',
       data: {
-        labels: statistics.value.monthly_trends.map(t => t.month),
+        labels: labels,
         datasets: [
           {
             label: 'Entrate',
-            data: statistics.value.monthly_trends.map(t => t.income),
+            data: incomeData,
             borderColor: '#059669',
             backgroundColor: 'rgba(5, 150, 105, 0.1)',
             tension: 0.4,
@@ -332,7 +423,7 @@ const renderCharts = () => {
           },
           {
             label: 'Spese',
-            data: statistics.value.monthly_trends.map(t => t.expense),
+            data: expenseData,
             borderColor: '#DC2626',
             backgroundColor: 'rgba(220, 38, 38, 0.1)',
             tension: 0.4,
@@ -381,10 +472,25 @@ const renderCharts = () => {
         }
       }
     })
+    console.log('✅ [Dashboard] Grafico trend creato con successo')
+    } catch (error) {
+      console.error('❌ [Dashboard] Errore nella creazione del grafico trend:', error)
+    }
+  } else {
+    console.warn('⚠️ [Dashboard] Impossibile creare grafico trend:', {
+      canvas: !!trendsChart.value,
+      hasData: statistics.value.monthly_trends?.length > 0,
+      dataLength: statistics.value.monthly_trends?.length || 0
+    })
   }
+  
+  console.log('🎨 [Dashboard] Rendering grafici completato')
 }
 
 onMounted(() => {
+  console.log('🚀 [Dashboard] Componente montato')
+  console.log('📊 [Dashboard] Chart.js disponibile:', typeof Chart !== 'undefined')
+  console.log('📊 [Dashboard] Chart version:', Chart?.version || 'N/A')
   loadStatistics()
 })
 </script>
