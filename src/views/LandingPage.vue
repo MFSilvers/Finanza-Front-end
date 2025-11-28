@@ -171,7 +171,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 import { Chart, registerables } from 'chart.js'
 
 Chart.register(...registerables)
@@ -179,8 +179,7 @@ Chart.register(...registerables)
 const categoryChart = ref(null)
 const trendsChart = ref(null)
 
-
-onMounted(() => {
+onMounted(async () => {
   // Animate elements on scroll
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -195,8 +194,10 @@ onMounted(() => {
   })
 
   // Create demo charts
-  if (categoryChart.value) {
-    new Chart(categoryChart.value, {
+  await nextTick()
+  requestAnimationFrame(() => {
+    if (categoryChart.value) {
+      new Chart(categoryChart.value, {
       type: 'doughnut',
       data: {
         labels: ['Alimentari', 'Trasporti', 'Affitto', 'Bollette', 'Intrattenimento'],
@@ -221,10 +222,10 @@ onMounted(() => {
         }
       }
     })
-  }
+    }
 
-  if (trendsChart.value) {
-    new Chart(trendsChart.value, {
+    if (trendsChart.value) {
+      new Chart(trendsChart.value, {
       type: 'line',
       data: {
         labels: ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu'],
@@ -260,7 +261,8 @@ onMounted(() => {
         }
       }
     })
-  }
+    }
+  })
 })
 </script>
 

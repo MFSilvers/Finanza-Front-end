@@ -240,10 +240,11 @@ const loadStatistics = async () => {
     statistics.value = transactionsStore.statistics
     
     await nextTick()
-    renderCharts()
-    
-    const renderEndTime = performance.now()
-    console.log(`🖥️ [Dashboard] Dati renderizzati a schermo:`, renderEndTime.toFixed(2), 'ms')
+    requestAnimationFrame(() => {
+      renderCharts()
+      const renderEndTime = performance.now()
+      console.log(`🖥️ [Dashboard] Dati renderizzati a schermo:`, renderEndTime.toFixed(2), 'ms')
+    })
   } catch (error) {
     // Errore nel caricamento statistiche
   } finally {
@@ -264,11 +265,7 @@ const clearFilters = () => {
 }
 
 const renderCharts = () => {
-  if (!statistics.value) {
-    return
-  }
-
-  if (typeof Chart === 'undefined') {
+  if (!statistics.value || typeof Chart === 'undefined') {
     return
   }
 
@@ -463,11 +460,12 @@ const renderCharts = () => {
   }
 }
 
-watch(statistics, async () => {
-  if (statistics.value && !loading.value) {
-    await nextTick()
+watch(() => statistics.value, async (val) => {
+  if (!val || loading.value) return
+  await nextTick()
+  requestAnimationFrame(() => {
     renderCharts()
-  }
+  })
 })
 
 onMounted(() => {

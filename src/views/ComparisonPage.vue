@@ -274,7 +274,9 @@ const loadComparison = async () => {
     stats2.value = { ...transactionsStore.statistics }
 
     await nextTick()
-    renderCharts()
+    requestAnimationFrame(() => {
+      renderCharts()
+    })
   } catch (error) {
     alert('Errore durante il caricamento dei dati')
   } finally {
@@ -283,7 +285,7 @@ const loadComparison = async () => {
 }
 
 const renderCharts = () => {
-  if (!stats1.value || !stats2.value) return
+  if (!stats1.value || !stats2.value || typeof Chart === 'undefined') return
 
   // Destroy existing charts
   if (chartInstance1) chartInstance1.destroy()
@@ -291,7 +293,7 @@ const renderCharts = () => {
   if (combinedChartInstance) combinedChartInstance.destroy()
 
   // Chart 1
-  if (chart1.value && stats1.value.expenses_by_category.length > 0) {
+  if (chart1.value && stats1.value.expenses_by_category && stats1.value.expenses_by_category.length > 0) {
     chartInstance1 = new Chart(chart1.value, {
       type: 'doughnut',
       data: {
@@ -313,7 +315,7 @@ const renderCharts = () => {
   }
 
   // Chart 2
-  if (chart2.value && stats2.value.expenses_by_category.length > 0) {
+  if (chart2.value && stats2.value.expenses_by_category && stats2.value.expenses_by_category.length > 0) {
     chartInstance2 = new Chart(chart2.value, {
       type: 'doughnut',
       data: {
