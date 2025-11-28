@@ -15,6 +15,23 @@ api.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }
+    
+    // Log per verificare cache delle richieste
+    console.log('📤 Richiesta API:', {
+      method: config.method?.toUpperCase(),
+      url: config.url,
+      baseURL: config.baseURL,
+      timestamp: new Date().toISOString(),
+      cache: config.headers['Cache-Control'] || 'default'
+    })
+    
+    // Disabilita cache per le richieste GET durante sviluppo
+    if (config.method === 'get') {
+      config.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+      config.headers['Pragma'] = 'no-cache'
+      config.headers['Expires'] = '0'
+    }
+    
     return config
   },
   (error) => {
@@ -24,7 +41,17 @@ api.interceptors.request.use(
 
 // Handle response errors
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    // Log per verificare cache delle risposte
+    console.log('📥 Risposta API:', {
+      url: response.config.url,
+      status: response.status,
+      timestamp: new Date().toISOString(),
+      fromCache: response.headers['x-cache'] || 'unknown',
+      etag: response.headers['etag'] || 'none'
+    })
+    return response
+  },
   (error) => {
     // Gestione errori di rete
     if (!error.response) {
