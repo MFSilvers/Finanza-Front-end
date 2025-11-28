@@ -238,13 +238,6 @@ const loadStatistics = async () => {
   try {
     await transactionsStore.fetchStatistics(filters.value)
     statistics.value = transactionsStore.statistics
-    
-    await nextTick()
-    requestAnimationFrame(() => {
-      renderCharts()
-      const renderEndTime = performance.now()
-      console.log(`🖥️ [Dashboard] Dati renderizzati a schermo:`, renderEndTime.toFixed(2), 'ms')
-    })
   } catch (error) {
     // Errore nel caricamento statistiche
   } finally {
@@ -270,17 +263,18 @@ const renderCharts = () => {
   }
 
   // Expenses by Category Chart
-  if (expensesCategoryChart.value && statistics.value.expenses_by_category && statistics.value.expenses_by_category.length > 0) {
+  if (expensesCategoryChart.value) {
     try {
-      const labels = statistics.value.expenses_by_category.map(c => c.name || 'Altro')
-      const data = statistics.value.expenses_by_category.map(c => c.total)
-      
-      if (expensesChart) {
-        expensesChart.data.labels = labels
-        expensesChart.data.datasets[0].data = data
-        expensesChart.update()
-      } else {
-        expensesChart = new Chart(expensesCategoryChart.value, {
+      if (statistics.value.expenses_by_category && statistics.value.expenses_by_category.length > 0) {
+        const labels = statistics.value.expenses_by_category.map(c => c.name || 'Altro')
+        const data = statistics.value.expenses_by_category.map(c => c.total)
+        
+        if (expensesChart) {
+          expensesChart.data.labels = labels
+          expensesChart.data.datasets[0].data = data
+          expensesChart.update()
+        } else {
+          expensesChart = new Chart(expensesCategoryChart.value, {
           type: 'doughnut',
           data: {
             labels: labels,
@@ -308,6 +302,10 @@ const renderCharts = () => {
             }
           }
         })
+        }
+      } else if (expensesChart) {
+        expensesChart.destroy()
+        expensesChart = null
       }
     } catch (error) {
       // Errore nella creazione del grafico spese
@@ -315,17 +313,18 @@ const renderCharts = () => {
   }
 
   // Income by Category Chart
-  if (incomeCategoryChart.value && statistics.value.income_by_category && statistics.value.income_by_category.length > 0) {
+  if (incomeCategoryChart.value) {
     try {
-      const labels = statistics.value.income_by_category.map(c => c.name || 'Altro')
-      const data = statistics.value.income_by_category.map(c => c.total)
-      
-      if (incomeChart) {
-        incomeChart.data.labels = labels
-        incomeChart.data.datasets[0].data = data
-        incomeChart.update()
-      } else {
-        incomeChart = new Chart(incomeCategoryChart.value, {
+      if (statistics.value.income_by_category && statistics.value.income_by_category.length > 0) {
+        const labels = statistics.value.income_by_category.map(c => c.name || 'Altro')
+        const data = statistics.value.income_by_category.map(c => c.total)
+        
+        if (incomeChart) {
+          incomeChart.data.labels = labels
+          incomeChart.data.datasets[0].data = data
+          incomeChart.update()
+        } else {
+          incomeChart = new Chart(incomeCategoryChart.value, {
           type: 'bar',
           data: {
             labels: labels,
@@ -370,6 +369,10 @@ const renderCharts = () => {
             }
           }
         })
+        }
+      } else if (incomeChart) {
+        incomeChart.destroy()
+        incomeChart = null
       }
     } catch (error) {
       // Errore nella creazione del grafico entrate
@@ -377,19 +380,20 @@ const renderCharts = () => {
   }
 
   // Monthly Trends Chart
-  if (trendsChart.value && statistics.value.monthly_trends && statistics.value.monthly_trends.length > 0) {
+  if (trendsChart.value) {
     try {
-      const labels = statistics.value.monthly_trends.map(t => t.month)
-      const incomeData = statistics.value.monthly_trends.map(t => t.income)
-      const expenseData = statistics.value.monthly_trends.map(t => t.expense)
-      
-      if (trendsChartInstance) {
-        trendsChartInstance.data.labels = labels
-        trendsChartInstance.data.datasets[0].data = incomeData
-        trendsChartInstance.data.datasets[1].data = expenseData
-        trendsChartInstance.update()
-      } else {
-        trendsChartInstance = new Chart(trendsChart.value, {
+      if (statistics.value.monthly_trends && statistics.value.monthly_trends.length > 0) {
+        const labels = statistics.value.monthly_trends.map(t => t.month)
+        const incomeData = statistics.value.monthly_trends.map(t => t.income)
+        const expenseData = statistics.value.monthly_trends.map(t => t.expense)
+        
+        if (trendsChartInstance) {
+          trendsChartInstance.data.labels = labels
+          trendsChartInstance.data.datasets[0].data = incomeData
+          trendsChartInstance.data.datasets[1].data = expenseData
+          trendsChartInstance.update()
+        } else {
+          trendsChartInstance = new Chart(trendsChart.value, {
           type: 'line',
           data: {
             labels: labels,
@@ -453,6 +457,10 @@ const renderCharts = () => {
             }
           }
         })
+        }
+      } else if (trendsChartInstance) {
+        trendsChartInstance.destroy()
+        trendsChartInstance = null
       }
     } catch (error) {
       // Errore nella creazione del grafico trend
@@ -463,9 +471,10 @@ const renderCharts = () => {
 watch(() => statistics.value, async (val) => {
   if (!val || loading.value) return
   await nextTick()
-  requestAnimationFrame(() => {
-    renderCharts()
-  })
+  await new Promise(resolve => requestAnimationFrame(resolve))
+  renderCharts()
+  const renderEndTime = performance.now()
+  console.log(`🖥️ [Dashboard] Dati renderizzati a schermo:`, renderEndTime.toFixed(2), 'ms')
 })
 
 onMounted(() => {
