@@ -3,36 +3,6 @@
     <div class="container mx-auto px-3 md:px-4">
       <div class="mb-6 md:mb-8">
         <h1 class="text-2xl md:text-4xl font-bold text-white mb-4">Dashboard</h1>
-        
-        <!-- Date Filter -->
-        <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-4 md:p-6 shadow-xl mb-6">
-          <div class="flex flex-col md:flex-row gap-3 md:gap-4 md:items-end">
-            <div class="flex-1 w-full">
-              <label class="block text-sm font-medium text-neutral-300 mb-2">Data Inizio</label>
-              <input 
-                v-model="filters.startDate" 
-                type="date" 
-                class="w-full px-3 md:px-4 py-2 md:py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white text-sm md:text-base"
-              />
-            </div>
-            <div class="flex-1 w-full">
-              <label class="block text-sm font-medium text-neutral-300 mb-2">Data Fine</label>
-              <input 
-                v-model="filters.endDate" 
-                type="date" 
-                class="w-full px-3 md:px-4 py-2 md:py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white text-sm md:text-base"
-              />
-            </div>
-            <div class="flex gap-2 w-full md:w-auto">
-              <button @click="applyFilters" class="btn-primary flex-1 md:flex-none text-sm md:text-base">
-                Applica
-              </button>
-              <button @click="clearFilters" class="btn-secondary flex-1 md:flex-none text-sm md:text-base">
-                Reset
-              </button>
-            </div>
-          </div>
-        </div>
       </div>
 
       <!-- Loading State -->
@@ -212,10 +182,6 @@ const transactionsStore = useTransactionsStore()
 
 const loading = ref(true)
 const statistics = ref(null)
-const filters = ref({
-  startDate: '',
-  endDate: ''
-})
 
 const expensesCategoryChart = ref(null)
 const incomeCategoryChart = ref(null)
@@ -236,25 +202,13 @@ const formatDate = (date) => {
 const loadStatistics = async () => {
   loading.value = true
   try {
-    await transactionsStore.fetchStatistics(filters.value)
+    await transactionsStore.fetchStatistics()
     statistics.value = transactionsStore.statistics
   } catch (error) {
     // Errore nel caricamento statistiche
   } finally {
     loading.value = false
   }
-}
-
-const applyFilters = () => {
-  loadStatistics()
-}
-
-const clearFilters = () => {
-  filters.value = {
-    startDate: '',
-    endDate: ''
-  }
-  loadStatistics()
 }
 
 const renderCharts = () => {
@@ -473,8 +427,6 @@ watch(() => statistics.value, async (val) => {
   await nextTick()
   await new Promise(resolve => requestAnimationFrame(resolve))
   renderCharts()
-  const renderEndTime = performance.now()
-  console.log(`🖥️ [Dashboard] Dati renderizzati a schermo:`, renderEndTime.toFixed(2), 'ms')
 })
 
 onMounted(() => {
