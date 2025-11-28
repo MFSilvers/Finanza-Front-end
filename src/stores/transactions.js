@@ -27,8 +27,12 @@ export const useTransactionsStore = defineStore('transactions', {
       this.error = null
       try {
         const response = await api.get('/transactions', { params: filters })
+        const storeTime = performance.now()
+        const timeFromResponse = response._responseTime ? (storeTime - response._responseTime).toFixed(2) : 'N/A'
+        console.log(`📦 [transactions] Dati assegnati allo store:`, storeTime.toFixed(2), 'ms', `(+${timeFromResponse} ms dalla risposta)`)
         this.transactions = response.data.transactions
         this.pagination = response.data.pagination
+        response._storeTime = storeTime
       } catch (error) {
         this.error = error.response?.data?.error || 'Failed to fetch transactions'
         throw error
@@ -85,7 +89,11 @@ export const useTransactionsStore = defineStore('transactions', {
     async fetchCategories() {
       try {
         const response = await api.get('/categories')
+        const storeTime = performance.now()
+        const timeFromResponse = response._responseTime ? (storeTime - response._responseTime).toFixed(2) : 'N/A'
+        console.log(`📦 [categories] Dati assegnati allo store:`, storeTime.toFixed(2), 'ms', `(+${timeFromResponse} ms dalla risposta)`)
         this.categories = response.data.categories
+        response._storeTime = storeTime
       } catch (error) {
         this.error = error.response?.data?.error || 'Failed to fetch categories'
         throw error
@@ -97,7 +105,11 @@ export const useTransactionsStore = defineStore('transactions', {
       this.error = null
       try {
         const response = await api.get('/statistics', { params: filters })
+        const storeTime = performance.now()
+        const timeFromResponse = response._responseTime ? (storeTime - response._responseTime).toFixed(2) : 'N/A'
+        console.log(`📦 [statistics] Dati assegnati allo store:`, storeTime.toFixed(2), 'ms', `(+${timeFromResponse} ms dalla risposta)`)
         this.statistics = response.data
+        response._storeTime = storeTime
       } catch (error) {
         this.error = error.response?.data?.error || 'Failed to fetch statistics'
         throw error

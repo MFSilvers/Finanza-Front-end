@@ -330,6 +330,10 @@ const loadData = async () => {
   try {
     await transactionsStore.fetchCategories()
     await transactionsStore.fetchTransactions(filters.value)
+    
+    await nextTick()
+    const renderTime = performance.now()
+    console.log(`🖥️ [Transactions] Dati renderizzati a schermo:`, renderTime.toFixed(2), 'ms')
   } catch (error) {
     // Errore nel caricamento dati
   } finally {

@@ -272,6 +272,8 @@ const loadStatistics = async () => {
     await new Promise(resolve => requestAnimationFrame(resolve))
     await new Promise(resolve => setTimeout(resolve, 100))
     
+    const renderStartTime = performance.now()
+    
     // Aspetta che i canvas siano disponibili nel DOM
     try {
       await Promise.allSettled([
@@ -288,6 +290,11 @@ const loadStatistics = async () => {
         renderCharts()
       }, 300)
     }
+    
+    await nextTick()
+    const renderEndTime = performance.now()
+    const totalRenderTime = (renderEndTime - renderStartTime).toFixed(2)
+    console.log(`🖥️ [Dashboard] Dati renderizzati a schermo:`, renderEndTime.toFixed(2), 'ms', `(rendering: ${totalRenderTime} ms)`)
   } catch (error) {
     // Errore nel caricamento statistiche
   } finally {
