@@ -202,7 +202,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, nextTick, watchEffect } from 'vue'
+import { ref, onMounted, watch, nextTick } from 'vue'
 import { useTransactionsStore } from '../stores/transactions'
 import { Chart, registerables } from 'chart.js'
 
@@ -233,68 +233,17 @@ const formatDate = (date) => {
   return new Date(date).toLocaleDateString('it-IT')
 }
 
-const waitForCanvas = (ref, maxAttempts = 30, delay = 50) => {
-  return new Promise((resolve, reject) => {
-    let attempts = 0
-    const checkCanvas = () => {
-      attempts++
-      if (ref.value && ref.value.offsetParent !== null) {
-        resolve(ref.value)
-      } else if (attempts >= maxAttempts) {
-        // Prova comunque a risolvere se il ref esiste, anche se non è visibile
-        if (ref.value) {
-          resolve(ref.value)
-        } else {
-          reject(new Error('Canvas non disponibile'))
-        }
-      } else {
-        // Usa requestAnimationFrame per aspettare il prossimo frame di rendering
-        requestAnimationFrame(() => {
-          setTimeout(checkCanvas, delay)
-        })
-      }
-    }
-    checkCanvas()
-  })
-}
-
 const loadStatistics = async () => {
   loading.value = true
   try {
     await transactionsStore.fetchStatistics(filters.value)
     statistics.value = transactionsStore.statistics
     
-    // Aspetta che il DOM sia aggiornato - usa multiple nextTick per assicurarsi
     await nextTick()
-    await nextTick()
+    renderCharts()
     
-    // Usa requestAnimationFrame per aspettare che il browser completi il rendering
-    await new Promise(resolve => requestAnimationFrame(resolve))
-    await new Promise(resolve => setTimeout(resolve, 100))
-    
-    const renderStartTime = performance.now()
-    
-    // Aspetta che i canvas siano disponibili nel DOM
-    try {
-      await Promise.allSettled([
-        waitForCanvas(expensesCategoryChart),
-        waitForCanvas(incomeCategoryChart),
-        waitForCanvas(trendsChart)
-      ])
-      
-      // Renderizza anche se non tutti i canvas sono disponibili
-      renderCharts()
-    } catch (error) {
-      // Prova comunque a renderizzare dopo un breve delay
-      setTimeout(() => {
-        renderCharts()
-      }, 300)
-    }
-    
-    await nextTick()
     const renderEndTime = performance.now()
-    const totalRenderTime = (renderEndTime - renderStartTime).toFixed(2)
-    console.log(`🖥️ [Dashboard] Dati renderizzati a schermo:`, renderEndTime.toFixed(2), 'ms', `(rendering: ${totalRenderTime} ms)`)
+    console.log(`🖥️ [Dashboard] Dati renderizzati a schermo:`, renderEndTime.toFixed(2), 'ms')
   } catch (error) {
     // Errore nel caricamento statistiche
   } finally {
@@ -319,20 +268,8 @@ const renderCharts = () => {
     return
   }
 
-  // Verifica che Chart.js sia disponibile
   if (typeof Chart === 'undefined') {
     return
-  }
-
-  // Destroy existing charts
-  if (expensesChart) {
-    expensesChart.destroy()
-  }
-  if (incomeChart) {
-    incomeChart.destroy()
-  }
-  if (trendsChartInstance) {
-    trendsChartInstance.destroy()
   }
 
   // Expenses by Category Chart
@@ -341,34 +278,40 @@ const renderCharts = () => {
       const labels = statistics.value.expenses_by_category.map(c => c.name || 'Altro')
       const data = statistics.value.expenses_by_category.map(c => c.total)
       
-      expensesChart = new Chart(expensesCategoryChart.value, {
-        type: 'doughnut',
-        data: {
-          labels: labels,
-          datasets: [{
-            data: data,
-            backgroundColor: [
-              '#2563EB', '#059669', '#DC2626', '#64748B', '#7C3AED',
-              '#EA580C', '#0891B2', '#BE185D', '#475569', '#0F172A'
-            ]
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              position: 'bottom',
-              labels: {
-                color: '#E2E8F0',
-                font: {
-                  size: 12
+      if (expensesChart) {
+        expensesChart.data.labels = labels
+        expensesChart.data.datasets[0].data = data
+        expensesChart.update()
+      } else {
+        expensesChart = new Chart(expensesCategoryChart.value, {
+          type: 'doughnut',
+          data: {
+            labels: labels,
+            datasets: [{
+              data: data,
+              backgroundColor: [
+                '#2563EB', '#059669', '#DC2626', '#64748B', '#7C3AED',
+                '#EA580C', '#0891B2', '#BE185D', '#475569', '#0F172A'
+              ]
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: 'bottom',
+                labels: {
+                  color: '#E2E8F0',
+                  font: {
+                    size: 12
+                  }
                 }
               }
             }
           }
-        }
-      })
+        })
+      }
     } catch (error) {
       // Errore nella creazione del grafico spese
     }
@@ -377,51 +320,60 @@ const renderCharts = () => {
   // Income by Category Chart
   if (incomeCategoryChart.value && statistics.value.income_by_category && statistics.value.income_by_category.length > 0) {
     try {
-      incomeChart = new Chart(incomeCategoryChart.value, {
-      type: 'bar',
-      data: {
-        labels: statistics.value.income_by_category.map(c => c.name || 'Altro'),
-        datasets: [{
-          label: 'Entrate',
-          data: statistics.value.income_by_category.map(c => c.total),
-          backgroundColor: '#059669'
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: {
-              color: '#E2E8F0',
-              font: {
-                size: 12
-              }
-            },
-            grid: {
-              color: 'rgba(226, 232, 240, 0.1)'
-            }
+      const labels = statistics.value.income_by_category.map(c => c.name || 'Altro')
+      const data = statistics.value.income_by_category.map(c => c.total)
+      
+      if (incomeChart) {
+        incomeChart.data.labels = labels
+        incomeChart.data.datasets[0].data = data
+        incomeChart.update()
+      } else {
+        incomeChart = new Chart(incomeCategoryChart.value, {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Entrate',
+              data: data,
+              backgroundColor: '#059669'
+            }]
           },
-          x: {
-            ticks: {
-              color: '#E2E8F0',
-              font: {
-                size: 12
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: false
               }
             },
-            grid: {
-              color: 'rgba(226, 232, 240, 0.1)'
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  color: '#E2E8F0',
+                  font: {
+                    size: 12
+                  }
+                },
+                grid: {
+                  color: 'rgba(226, 232, 240, 0.1)'
+                }
+              },
+              x: {
+                ticks: {
+                  color: '#E2E8F0',
+                  font: {
+                    size: 12
+                  }
+                },
+                grid: {
+                  color: 'rgba(226, 232, 240, 0.1)'
+                }
+              }
             }
           }
-        }
+        })
       }
-    })
     } catch (error) {
       // Errore nella creazione del grafico entrate
     }
@@ -434,97 +386,89 @@ const renderCharts = () => {
       const incomeData = statistics.value.monthly_trends.map(t => t.income)
       const expenseData = statistics.value.monthly_trends.map(t => t.expense)
       
-      trendsChartInstance = new Chart(trendsChart.value, {
-      type: 'line',
-      data: {
-        labels: labels,
-        datasets: [
-          {
-            label: 'Entrate',
-            data: incomeData,
-            borderColor: '#059669',
-            backgroundColor: 'rgba(5, 150, 105, 0.1)',
-            tension: 0.4,
-            fill: true
-          },
-          {
-            label: 'Spese',
-            data: expenseData,
-            borderColor: '#DC2626',
-            backgroundColor: 'rgba(220, 38, 38, 0.1)',
-            tension: 0.4,
-            fill: true
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: 'bottom',
-            labels: {
-              color: '#E2E8F0',
-              font: {
-                size: 12
+      if (trendsChartInstance) {
+        trendsChartInstance.data.labels = labels
+        trendsChartInstance.data.datasets[0].data = incomeData
+        trendsChartInstance.data.datasets[1].data = expenseData
+        trendsChartInstance.update()
+      } else {
+        trendsChartInstance = new Chart(trendsChart.value, {
+          type: 'line',
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: 'Entrate',
+                data: incomeData,
+                borderColor: '#059669',
+                backgroundColor: 'rgba(5, 150, 105, 0.1)',
+                tension: 0.4,
+                fill: true
+              },
+              {
+                label: 'Spese',
+                data: expenseData,
+                borderColor: '#DC2626',
+                backgroundColor: 'rgba(220, 38, 38, 0.1)',
+                tension: 0.4,
+                fill: true
               }
-            }
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: {
-              color: '#E2E8F0',
-              font: {
-                size: 12
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: 'bottom',
+                labels: {
+                  color: '#E2E8F0',
+                  font: {
+                    size: 12
+                  }
+                }
               }
             },
-            grid: {
-              color: 'rgba(226, 232, 240, 0.1)'
-            }
-          },
-          x: {
-            ticks: {
-              color: '#E2E8F0',
-              font: {
-                size: 12
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  color: '#E2E8F0',
+                  font: {
+                    size: 12
+                  }
+                },
+                grid: {
+                  color: 'rgba(226, 232, 240, 0.1)'
+                }
+              },
+              x: {
+                ticks: {
+                  color: '#E2E8F0',
+                  font: {
+                    size: 12
+                  }
+                },
+                grid: {
+                  color: 'rgba(226, 232, 240, 0.1)'
+                }
               }
-            },
-            grid: {
-              color: 'rgba(226, 232, 240, 0.1)'
             }
           }
-        }
+        })
       }
-    })
     } catch (error) {
       // Errore nella creazione del grafico trend
     }
   }
 }
 
-// Watch per renderizzare i grafici quando i canvas sono disponibili
-watch([statistics, expensesCategoryChart, incomeCategoryChart, trendsChart], () => {
+watch(statistics, async () => {
   if (statistics.value && !loading.value) {
-    // Usa requestAnimationFrame per aspettare il rendering
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        const hasCanvas = expensesCategoryChart.value || incomeCategoryChart.value || trendsChart.value
-        if (hasCanvas) {
-          renderCharts()
-        } else {
-          // Retry dopo un breve delay
-          setTimeout(() => {
-            if (statistics.value && !loading.value) {
-              renderCharts()
-            }
-          }, 200)
-        }
-      })
-    })
+    await nextTick()
+    renderCharts()
   }
-}, { flush: 'post', immediate: false })
+})
 
 onMounted(() => {
   loadStatistics()
