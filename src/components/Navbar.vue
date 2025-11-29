@@ -32,10 +32,11 @@
         </div>
         <div class="flex items-center space-x-2 md:space-x-4">
           <span class="hidden lg:inline text-sm text-neutral-300">{{ user?.name }}</span>
-          <button @click="handleLogout" class="bg-error hover:bg-error-dark text-white px-3 md:px-4 py-2 rounded-lg transition-all text-xs md:text-sm font-medium">
-            <span class="hidden sm:inline">Esci</span>
-            <span class="sm:hidden">X</span>
+          <button @click="handleLogout" class="hidden md:block bg-error hover:bg-error-dark text-white px-3 md:px-4 py-2 rounded-lg transition-all text-xs md:text-sm font-medium">
+            Esci
           </button>
+          <!-- Mobile: mostra nome utente al posto del pulsante logout -->
+          <span class="md:hidden text-sm text-neutral-300">{{ user?.name }}</span>
           <!-- Mobile Menu Button -->
           <button 
             @click="mobileMenuOpen = !mobileMenuOpen" 
@@ -79,9 +80,12 @@
           >
             Confronto
           </router-link>
-          <div class="px-4 py-2 text-sm text-neutral-300 border-t border-neutral-700 mt-2 pt-2">
-            {{ user?.name }}
-          </div>
+          <button 
+            @click="handleLogout" 
+            class="px-4 py-2 rounded-lg text-sm font-medium transition-all bg-error hover:bg-error-dark text-white text-left border-t border-neutral-700 mt-2 pt-2"
+          >
+            Exit
+          </button>
         </div>
       </div>
     </div>
