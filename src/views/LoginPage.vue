@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-neutral-900 via-neutral-800 to-primary-dark flex items-center justify-center px-3 md:px-4 py-8">
+  <div class="min-h-screen bg-neutral-900 flex items-center justify-center px-3 md:px-4 py-8">
     <div class="bg-neutral-800/90 backdrop-blur-sm border border-neutral-700 rounded-xl shadow-2xl max-w-md w-full animate-slide-up p-6 md:p-8">
       <div class="text-center mb-6 md:mb-8">
         <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">Accedi</h1>
@@ -7,7 +7,7 @@
       </div>
 
       <form @submit.prevent="handleLogin" class="space-y-6">
-        <div v-if="error" class="bg-error/20 border border-error/50 text-error-light px-4 py-3 rounded-lg">
+        <div v-if="error" class="bg-error/20 border border-error/50 text-error px-4 py-3 rounded-lg">
           {{ error }}
         </div>
 
@@ -17,7 +17,7 @@
             v-model="formData.email" 
             type="email" 
             required
-            class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white placeholder-neutral-400"
+            class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all text-white placeholder-neutral-400"
             placeholder="tuo@email.com"
           />
         </div>
@@ -28,7 +28,7 @@
             v-model="formData.password" 
             type="password" 
             required
-            class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white placeholder-neutral-400"
+            class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all text-white placeholder-neutral-400"
             placeholder="••••••••"
           />
         </div>
@@ -49,7 +49,7 @@
       <div class="mt-6 text-center">
         <p class="text-neutral-300">
           Non hai un account? 
-          <router-link to="/register" class="text-accent-blue-light font-semibold hover:text-accent-blue transition-colors">
+          <router-link to="/register" class="text-secondary font-semibold hover:text-primary transition-all">
             Registrati
           </router-link>
         </p>

@@ -1,30 +1,30 @@
 <template>
-  <nav class="bg-gradient-to-br from-neutral-900 via-neutral-800 to-primary-dark border-b border-neutral-700 text-white fixed top-0 left-0 right-0 z-50 shadow-lg">
+  <nav class="bg-neutral-900 border-b border-neutral-700 text-white fixed top-0 left-0 right-0 z-50 shadow-lg">
     <div class="container mx-auto px-4">
       <div class="flex items-center justify-between h-16">
         <div class="flex items-center space-x-4 md:space-x-8">
-          <router-link to="/dashboard" class="text-lg md:text-xl font-bold text-white hover:text-accent-blue-light transition-colors">
+          <router-link to="/dashboard" class="text-lg md:text-xl font-bold text-white hover:text-secondary transition-all">
             Finanze
           </router-link>
           <div class="hidden md:flex space-x-1">
             <router-link 
               to="/dashboard" 
-              class="hover:bg-neutral-700/50 transition-colors px-3 py-2 rounded-md text-sm font-medium"
-              :class="{ 'bg-neutral-700/50 text-accent-blue-light': $route.name === 'Dashboard', 'text-neutral-300': $route.name !== 'Dashboard' }"
+              class="hover:bg-neutral-700/50 transition-all px-3 py-2 rounded-lg text-sm font-medium"
+              :class="{ 'bg-neutral-700/50 text-secondary': $route.name === 'Dashboard', 'text-neutral-300': $route.name !== 'Dashboard' }"
             >
               Dashboard
             </router-link>
             <router-link 
               to="/transactions" 
-              class="hover:bg-neutral-700/50 transition-colors px-3 py-2 rounded-md text-sm font-medium"
-              :class="{ 'bg-neutral-700/50 text-accent-blue-light': $route.name === 'Transactions', 'text-neutral-300': $route.name !== 'Transactions' }"
+              class="hover:bg-neutral-700/50 transition-all px-3 py-2 rounded-lg text-sm font-medium"
+              :class="{ 'bg-neutral-700/50 text-secondary': $route.name === 'Transactions', 'text-neutral-300': $route.name !== 'Transactions' }"
             >
               Transazioni
             </router-link>
             <router-link 
               to="/comparison" 
-              class="hover:bg-neutral-700/50 transition-colors px-3 py-2 rounded-md text-sm font-medium"
-              :class="{ 'bg-neutral-700/50 text-accent-blue-light': $route.name === 'Comparison', 'text-neutral-300': $route.name !== 'Comparison' }"
+              class="hover:bg-neutral-700/50 transition-all px-3 py-2 rounded-lg text-sm font-medium"
+              :class="{ 'bg-neutral-700/50 text-secondary': $route.name === 'Comparison', 'text-neutral-300': $route.name !== 'Comparison' }"
             >
               Confronto
             </router-link>
@@ -32,14 +32,14 @@
         </div>
         <div class="flex items-center space-x-2 md:space-x-4">
           <span class="hidden lg:inline text-sm text-neutral-300">{{ user?.name }}</span>
-          <button @click="handleLogout" class="bg-error-light hover:bg-error text-white px-3 md:px-4 py-2 rounded-lg transition-colors text-xs md:text-sm font-medium">
+          <button @click="handleLogout" class="bg-error hover:bg-error-dark text-white px-3 md:px-4 py-2 rounded-lg transition-all text-xs md:text-sm font-medium">
             <span class="hidden sm:inline">Esci</span>
             <span class="sm:hidden">X</span>
           </button>
           <!-- Mobile Menu Button -->
           <button 
             @click="mobileMenuOpen = !mobileMenuOpen" 
-            class="md:hidden p-2 rounded-lg hover:bg-neutral-700/50 transition-colors"
+            class="md:hidden p-2 rounded-lg hover:bg-neutral-700/50 transition-all"
             aria-label="Menu"
           >
             <svg v-if="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -58,24 +58,24 @@
           <router-link 
             to="/dashboard" 
             @click="mobileMenuOpen = false"
-            class="px-4 py-2 rounded-md text-sm font-medium transition-colors"
-            :class="{ 'bg-neutral-700/50 text-accent-blue-light': $route.name === 'Dashboard', 'text-neutral-300 hover:bg-neutral-700/30': $route.name !== 'Dashboard' }"
+            class="px-4 py-2 rounded-lg text-sm font-medium transition-all"
+            :class="{ 'bg-neutral-700/50 text-secondary': $route.name === 'Dashboard', 'text-neutral-300 hover:bg-neutral-700/30': $route.name !== 'Dashboard' }"
           >
             Dashboard
           </router-link>
           <router-link 
             to="/transactions" 
             @click="mobileMenuOpen = false"
-            class="px-4 py-2 rounded-md text-sm font-medium transition-colors"
-            :class="{ 'bg-neutral-700/50 text-accent-blue-light': $route.name === 'Transactions', 'text-neutral-300 hover:bg-neutral-700/30': $route.name !== 'Transactions' }"
+            class="px-4 py-2 rounded-lg text-sm font-medium transition-all"
+            :class="{ 'bg-neutral-700/50 text-secondary': $route.name === 'Transactions', 'text-neutral-300 hover:bg-neutral-700/30': $route.name !== 'Transactions' }"
           >
             Transazioni
           </router-link>
           <router-link 
             to="/comparison" 
             @click="mobileMenuOpen = false"
-            class="px-4 py-2 rounded-md text-sm font-medium transition-colors"
-            :class="{ 'bg-neutral-700/50 text-accent-blue-light': $route.name === 'Comparison', 'text-neutral-300 hover:bg-neutral-700/30': $route.name !== 'Comparison' }"
+            class="px-4 py-2 rounded-lg text-sm font-medium transition-all"
+            :class="{ 'bg-neutral-700/50 text-secondary': $route.name === 'Comparison', 'text-neutral-300 hover:bg-neutral-700/30': $route.name !== 'Comparison' }"
           >
             Confronto
           </router-link>

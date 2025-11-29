@@ -1,5 +1,5 @@
 <template>
-  <div class="comparison-page min-h-screen bg-gradient-to-br from-neutral-900 via-neutral-800 to-primary-dark py-4 md:py-8">
+  <div class="comparison-page min-h-screen bg-neutral-900 py-4 md:py-8">
     <div class="container mx-auto px-3 md:px-4">
       <div class="mb-6 md:mb-8">
         <h1 class="text-2xl md:text-4xl font-bold text-white mb-4">Confronto e Esportazione</h1>
@@ -10,31 +10,31 @@
           
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             <!-- Period 1 -->
-            <div class="border-2 border-accent-blue/30 rounded-lg p-4 bg-accent-blue/10">
-              <h4 class="font-semibold mb-3 text-accent-blue-light">Periodo 1</h4>
+            <div class="border-2 border-primary/30 rounded-lg p-4 bg-primary/10">
+              <h4 class="font-semibold mb-3 text-secondary">Periodo 1</h4>
               <div class="space-y-3">
                 <div>
                   <label class="block text-sm font-medium text-neutral-300 mb-2">Data Inizio</label>
-                  <input v-model="period1.start" type="date" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white" />
+                  <input v-model="period1.start" type="date" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all text-white" />
                 </div>
                 <div>
                   <label class="block text-sm font-medium text-neutral-300 mb-2">Data Fine</label>
-                  <input v-model="period1.end" type="date" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white" />
+                  <input v-model="period1.end" type="date" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all text-white" />
                 </div>
               </div>
             </div>
 
             <!-- Period 2 -->
-            <div class="border-2 border-success-light/30 rounded-lg p-4 bg-success-light/10">
-              <h4 class="font-semibold mb-3 text-success-light">Periodo 2</h4>
+            <div class="border-2 border-success/30 rounded-lg p-4 bg-success/10">
+              <h4 class="font-semibold mb-3 text-success">Periodo 2</h4>
               <div class="space-y-3">
                 <div>
                   <label class="block text-sm font-medium text-neutral-300 mb-2">Data Inizio</label>
-                  <input v-model="period2.start" type="date" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white" />
+                  <input v-model="period2.start" type="date" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all text-white" />
                 </div>
                 <div>
                   <label class="block text-sm font-medium text-neutral-300 mb-2">Data Fine</label>
-                  <input v-model="period2.end" type="date" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white" />
+                  <input v-model="period2.end" type="date" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all text-white" />
                 </div>
               </div>
             </div>
@@ -75,11 +75,11 @@
             <h3 class="text-base md:text-lg font-semibold text-neutral-300 mb-3 md:mb-4">Saldo</h3>
             <div class="space-y-2">
               <div class="flex justify-between items-center text-sm md:text-base">
-                <span class="text-accent-blue-light font-medium">Periodo 1:</span>
+                <span class="text-secondary font-medium">Periodo 1:</span>
                 <span class="font-bold text-lg md:text-xl text-white">€ {{ formatNumber(stats1.balance) }}</span>
               </div>
               <div class="flex justify-between items-center text-sm md:text-base">
-                <span class="text-success-light font-medium">Periodo 2:</span>
+                <span class="text-success font-medium">Periodo 2:</span>
                 <span class="font-bold text-lg md:text-xl text-white">€ {{ formatNumber(stats2.balance) }}</span>
               </div>
               <div class="border-t border-neutral-700 pt-2 flex justify-between items-center text-sm md:text-base">
@@ -95,11 +95,11 @@
             <h3 class="text-base md:text-lg font-semibold text-neutral-300 mb-3 md:mb-4">Entrate</h3>
             <div class="space-y-2">
               <div class="flex justify-between items-center">
-                <span class="text-accent-blue-light font-medium">Periodo 1:</span>
+                <span class="text-secondary font-medium">Periodo 1:</span>
                 <span class="font-bold text-xl text-white">€ {{ formatNumber(stats1.total_income) }}</span>
               </div>
               <div class="flex justify-between items-center">
-                <span class="text-success-light font-medium">Periodo 2:</span>
+                <span class="text-success font-medium">Periodo 2:</span>
                 <span class="font-bold text-xl text-white">€ {{ formatNumber(stats2.total_income) }}</span>
               </div>
               <div class="border-t border-neutral-700 pt-2 flex justify-between items-center">
@@ -115,11 +115,11 @@
             <h3 class="text-base md:text-lg font-semibold text-neutral-300 mb-3 md:mb-4">Spese</h3>
             <div class="space-y-2">
               <div class="flex justify-between items-center">
-                <span class="text-accent-blue-light font-medium">Periodo 1:</span>
+                <span class="text-secondary font-medium">Periodo 1:</span>
                 <span class="font-bold text-xl text-white">€ {{ formatNumber(stats1.total_expense) }}</span>
               </div>
               <div class="flex justify-between items-center">
-                <span class="text-success-light font-medium">Periodo 2:</span>
+                <span class="text-success font-medium">Periodo 2:</span>
                 <span class="font-bold text-xl text-white">€ {{ formatNumber(stats2.total_expense) }}</span>
               </div>
               <div class="border-t border-neutral-700 pt-2 flex justify-between items-center">
@@ -135,15 +135,15 @@
         <!-- Charts Comparison -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
           <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-4 md:p-6 shadow-xl">
-            <h3 class="text-lg md:text-2xl font-bold mb-4 md:mb-6 text-accent-blue-light">Periodo 1</h3>
-            <div class="chart-container" style="height: 280px; md:height: 350px;">
+            <h3 class="text-lg md:text-2xl font-bold mb-4 md:mb-6 text-secondary">Periodo 1</h3>
+            <div class="chart-container" style="height: 280px;">
               <canvas ref="chart1"></canvas>
             </div>
           </div>
 
           <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-4 md:p-6 shadow-xl">
-            <h3 class="text-lg md:text-2xl font-bold mb-4 md:mb-6 text-success-light">Periodo 2</h3>
-            <div class="chart-container" style="height: 280px; md:height: 350px;">
+            <h3 class="text-lg md:text-2xl font-bold mb-4 md:mb-6 text-success">Periodo 2</h3>
+            <div class="chart-container" style="height: 280px;">
               <canvas ref="chart2"></canvas>
             </div>
           </div>
@@ -152,7 +152,7 @@
         <!-- Combined Chart -->
         <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-4 md:p-6 shadow-xl">
           <h3 class="text-lg md:text-2xl font-bold mb-4 md:mb-6 text-white">Confronto Entrate vs Spese</h3>
-          <div class="chart-container" style="height: 300px; md:height: 400px;">
+          <div class="chart-container" style="height: 300px;">
             <canvas ref="combinedChart"></canvas>
           </div>
         </div>
@@ -248,7 +248,7 @@ const formatDifference = (value) => {
 }
 
 const getDifferenceClass = (value) => {
-  return value >= 0 ? 'text-success-light' : 'text-error-light'
+  return value >= 0 ? 'text-success' : 'text-error'
 }
 
 const loadComparison = async () => {
@@ -300,7 +300,7 @@ const renderCharts = () => {
         labels: stats1.value.expenses_by_category.map(c => c.name || 'Altro'),
         datasets: [{
           data: stats1.value.expenses_by_category.map(c => c.total),
-          backgroundColor: ['#2563EB', '#059669', '#DC2626', '#64748B', '#7C3AED', '#EA580C', '#0891B2', '#BE185D']
+          backgroundColor: ['#1E3A8A', '#059669', '#DC2626', '#6B7280', '#3B82F6', '#D97706', '#1F2937', '#059669']
         }]
       },
       options: {
@@ -322,7 +322,7 @@ const renderCharts = () => {
         labels: stats2.value.expenses_by_category.map(c => c.name || 'Altro'),
         datasets: [{
           data: stats2.value.expenses_by_category.map(c => c.total),
-          backgroundColor: ['#2563EB', '#059669', '#DC2626', '#64748B', '#7C3AED', '#EA580C', '#0891B2', '#BE185D']
+          backgroundColor: ['#1E3A8A', '#059669', '#DC2626', '#6B7280', '#3B82F6', '#D97706', '#1F2937', '#059669']
         }]
       },
       options: {
@@ -346,7 +346,7 @@ const renderCharts = () => {
           {
             label: 'Periodo 1',
             data: [stats1.value.total_income, stats1.value.total_expense],
-            backgroundColor: '#2563EB'
+            backgroundColor: '#1E3A8A'
           },
           {
             label: 'Periodo 2',

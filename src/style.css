@@ -5,7 +5,7 @@
 @layer base {
   body {
     @apply bg-neutral-50 text-neutral-900;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -13,19 +13,19 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-accent-blue hover:bg-accent-blue-dark text-white font-semibold py-2.5 px-6 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md active:scale-[0.98];
+    @apply bg-primary hover:bg-primary-dark text-white font-semibold py-2.5 px-6 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg active:scale-[0.98];
   }
   
   .btn-secondary {
-    @apply bg-white hover:bg-neutral-50 text-primary-dark font-semibold py-2.5 px-6 rounded-lg border border-neutral-300 transition-all duration-200 hover:border-neutral-400 active:scale-[0.98];
+    @apply bg-white hover:bg-neutral-100 text-primary font-semibold py-2.5 px-6 rounded-lg border border-neutral-200 transition-all duration-200 hover:border-neutral-300 active:scale-[0.98];
   }
   
   .card {
-    @apply bg-white rounded-lg shadow-sm border border-neutral-200 p-6 transition-all duration-200 hover:shadow-md;
+    @apply bg-white rounded-lg shadow-md border border-neutral-200 p-6 transition-all duration-200 hover:shadow-lg;
   }
   
   .input-field {
-    @apply w-full px-4 py-2.5 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all bg-white text-neutral-900 placeholder-neutral-400;
+    @apply w-full px-4 py-2.5 border border-neutral-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all bg-white text-neutral-900 placeholder-neutral-400;
   }
   
   .label {
@@ -58,8 +58,8 @@
 
 /* Loading spinner */
 .spinner {
-  border: 3px solid #E2E8F0;
-  border-top: 3px solid #2563EB;
+  border: 3px solid #E5E7EB;
+  border-top: 3px solid #1E3A8A;
   border-radius: 50%;
   width: 40px;
   height: 40px;

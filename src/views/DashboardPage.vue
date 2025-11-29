@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-page min-h-screen bg-gradient-to-br from-neutral-900 via-neutral-800 to-primary-dark py-4 md:py-8">
+  <div class="dashboard-page min-h-screen bg-neutral-900 py-4 md:py-8">
     <div class="container mx-auto px-3 md:px-4">
       <div class="mb-6 md:mb-8">
         <h1 class="text-2xl md:text-4xl font-bold text-white mb-4">Dashboard</h1>
@@ -20,8 +20,8 @@
                 <p class="text-xs md:text-sm text-neutral-300 mb-1">Saldo Totale</p>
                 <p class="text-2xl md:text-3xl font-bold text-white">€ {{ formatNumber(statistics.balance) }}</p>
               </div>
-              <div class="w-12 h-12 bg-accent-blue/20 rounded-lg flex items-center justify-center">
-                <svg class="w-6 h-6 text-accent-blue-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center">
+                <svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
@@ -32,10 +32,10 @@
             <div class="flex items-center justify-between">
               <div class="flex-1">
                 <p class="text-xs md:text-sm text-neutral-300 mb-1">Entrate Totali</p>
-                <p class="text-2xl md:text-3xl font-bold text-success-light">€ {{ formatNumber(statistics.total_income) }}</p>
+                <p class="text-2xl md:text-3xl font-bold text-success">€ {{ formatNumber(statistics.total_income) }}</p>
               </div>
-              <div class="w-12 h-12 bg-success-light/20 rounded-lg flex items-center justify-center">
-                <svg class="w-6 h-6 text-success-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="w-12 h-12 bg-success/20 rounded-lg flex items-center justify-center">
+                <svg class="w-6 h-6 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                 </svg>
               </div>
@@ -46,10 +46,10 @@
             <div class="flex items-center justify-between">
               <div class="flex-1">
                 <p class="text-xs md:text-sm text-neutral-300 mb-1">Spese Totali</p>
-                <p class="text-2xl md:text-3xl font-bold text-error-light">€ {{ formatNumber(statistics.total_expense) }}</p>
+                <p class="text-2xl md:text-3xl font-bold text-error">€ {{ formatNumber(statistics.total_expense) }}</p>
               </div>
-              <div class="w-12 h-12 bg-error-light/20 rounded-lg flex items-center justify-center">
-                <svg class="w-6 h-6 text-error-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="w-12 h-12 bg-error/20 rounded-lg flex items-center justify-center">
+                <svg class="w-6 h-6 text-error" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6 6" />
                 </svg>
               </div>
@@ -61,11 +61,11 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl">
             <h3 class="text-lg font-semibold text-neutral-300 mb-2">Media Mensile Entrate</h3>
-            <p class="text-2xl font-bold text-success-light">€ {{ formatNumber(statistics.average_monthly_income) }}</p>
+            <p class="text-2xl font-bold text-success">€ {{ formatNumber(statistics.average_monthly_income) }}</p>
           </div>
           <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-6 shadow-xl">
             <h3 class="text-lg font-semibold text-neutral-300 mb-2">Media Mensile Spese</h3>
-            <p class="text-2xl font-bold text-error-light">€ {{ formatNumber(statistics.average_monthly_expense) }}</p>
+            <p class="text-2xl font-bold text-error">€ {{ formatNumber(statistics.average_monthly_expense) }}</p>
           </div>
         </div>
 
@@ -74,7 +74,7 @@
           <!-- Expenses by Category -->
           <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-4 md:p-6 shadow-xl">
             <h3 class="text-lg md:text-2xl font-bold mb-4 md:mb-6 text-white">Spese per Categoria</h3>
-            <div class="chart-container" style="height: 280px; md:height: 350px;">
+            <div class="chart-container" style="height: 280px;">
               <canvas ref="expensesCategoryChart"></canvas>
               <div v-if="!statistics?.expenses_by_category || statistics.expenses_by_category.length === 0" class="flex items-center justify-center h-full text-neutral-400 text-sm md:text-base">
                 <p>Nessun dato disponibile per le spese</p>
@@ -85,7 +85,7 @@
           <!-- Income by Category -->
           <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-4 md:p-6 shadow-xl">
             <h3 class="text-lg md:text-2xl font-bold mb-4 md:mb-6 text-white">Entrate per Categoria</h3>
-            <div class="chart-container" style="height: 280px; md:height: 350px;">
+            <div class="chart-container" style="height: 280px;">
               <canvas ref="incomeCategoryChart"></canvas>
               <div v-if="!statistics?.income_by_category || statistics.income_by_category.length === 0" class="flex items-center justify-center h-full text-neutral-400 text-sm md:text-base">
                 <p>Nessun dato disponibile per le entrate</p>
@@ -97,7 +97,7 @@
         <!-- Monthly Trends -->
         <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-4 md:p-6 shadow-xl">
           <h3 class="text-lg md:text-2xl font-bold mb-4 md:mb-6 text-white">Andamento Mensile</h3>
-          <div class="chart-container" style="height: 300px; md:height: 400px;">
+          <div class="chart-container" style="height: 300px;">
             <canvas ref="trendsChart"></canvas>
             <div v-if="!statistics?.monthly_trends || statistics.monthly_trends.length === 0" class="flex items-center justify-center h-full text-neutral-400 text-sm md:text-base">
               <p>Nessun dato disponibile per i trend mensili</p>
@@ -109,7 +109,7 @@
         <div class="bg-neutral-800/80 backdrop-blur-sm border border-neutral-700 rounded-lg p-4 md:p-6 shadow-xl">
           <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 md:mb-6 gap-2">
             <h3 class="text-lg md:text-2xl font-bold text-white">Transazioni Recenti</h3>
-            <router-link to="/transactions" class="text-accent-blue-light hover:text-accent-blue font-medium transition-colors text-sm md:text-base">
+            <router-link to="/transactions" class="text-secondary hover:text-primary font-medium transition-all text-sm md:text-base">
               Vedi tutte →
             </router-link>
           </div>
@@ -124,12 +124,12 @@
                 >
                   <div class="flex justify-between items-start mb-2">
                     <span class="text-xs text-neutral-400">{{ formatDate(transaction.date) }}</span>
-                    <span class="px-2 py-1 rounded text-xs font-medium" :class="transaction.type === 'income' ? 'bg-success-light/20 text-success-light' : 'bg-error-light/20 text-error-light'">
+                    <span class="px-2 py-1 rounded text-xs font-medium" :class="transaction.type === 'income' ? 'bg-success/20 text-success' : 'bg-error/20 text-error'">
                       {{ transaction.category_name || 'Altro' }}
                     </span>
                   </div>
                   <p class="text-sm text-neutral-300 mb-1">{{ transaction.description || '-' }}</p>
-                  <p class="text-lg font-bold" :class="transaction.type === 'income' ? 'text-success-light' : 'text-error-light'">
+                  <p class="text-lg font-bold" :class="transaction.type === 'income' ? 'text-success' : 'text-error'">
                     {{ transaction.type === 'income' ? '+' : '-' }}€ {{ formatNumber(transaction.amount) }}
                   </p>
                 </div>
@@ -153,11 +153,11 @@
                     <td class="py-3 px-4 text-neutral-300 text-sm">{{ formatDate(transaction.date) }}</td>
                     <td class="py-3 px-4 text-neutral-300 text-sm">{{ transaction.description || '-' }}</td>
                     <td class="py-3 px-4">
-                      <span class="px-2 py-1 rounded text-xs font-medium" :class="transaction.type === 'income' ? 'bg-success-light/20 text-success-light' : 'bg-error-light/20 text-error-light'">
+                      <span class="px-2 py-1 rounded text-xs font-medium" :class="transaction.type === 'income' ? 'bg-success/20 text-success' : 'bg-error/20 text-error'">
                         {{ transaction.category_name || 'Altro' }}
                       </span>
                     </td>
-                    <td class="py-3 px-4 text-right font-semibold text-sm" :class="transaction.type === 'income' ? 'text-success-light' : 'text-error-light'">
+                    <td class="py-3 px-4 text-right font-semibold text-sm" :class="transaction.type === 'income' ? 'text-success' : 'text-error'">
                       {{ transaction.type === 'income' ? '+' : '-' }}€ {{ formatNumber(transaction.amount) }}
                     </td>
                   </tr>
@@ -235,8 +235,8 @@ const renderCharts = () => {
             datasets: [{
               data: data,
               backgroundColor: [
-                '#2563EB', '#059669', '#DC2626', '#64748B', '#7C3AED',
-                '#EA580C', '#0891B2', '#BE185D', '#475569', '#0F172A'
+                '#1E3A8A', '#059669', '#DC2626', '#6B7280', '#3B82F6',
+                '#D97706', '#1F2937', '#059669', '#1E3A8A', '#3B82F6'
               ]
             }]
           },

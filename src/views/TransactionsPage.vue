@@ -1,5 +1,5 @@
 <template>
-  <div class="transactions-page min-h-screen bg-gradient-to-br from-neutral-900 via-neutral-800 to-primary-dark py-4 md:py-8">
+  <div class="transactions-page min-h-screen bg-neutral-900 py-4 md:py-8">
     <div class="container mx-auto px-3 md:px-4">
       <div class="mb-6 md:mb-8">
         <h1 class="text-2xl md:text-4xl font-bold text-white mb-4">Transazioni</h1>
@@ -14,7 +14,7 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
             <div>
               <label class="block text-sm font-medium text-neutral-300 mb-2">Tipo</label>
-              <select v-model="filters.type" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white">
+              <select v-model="filters.type" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all text-white">
                 <option value="" class="bg-neutral-800">Tutti</option>
                 <option value="income" class="bg-neutral-800">Entrate</option>
                 <option value="expense" class="bg-neutral-800">Spese</option>
@@ -22,7 +22,7 @@
             </div>
             <div>
               <label class="block text-sm font-medium text-neutral-300 mb-2">Categoria</label>
-              <select v-model="filters.category_id" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white">
+              <select v-model="filters.category_id" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all text-white">
                 <option value="" class="bg-neutral-800">Tutte</option>
                 <option v-for="cat in categories" :key="cat.id" :value="cat.id" class="bg-neutral-800">
                   {{ cat.name }}
@@ -31,11 +31,11 @@
             </div>
             <div>
               <label class="block text-sm font-medium text-neutral-300 mb-2">Data Inizio</label>
-              <input v-model="filters.start_date" type="date" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white" />
+              <input v-model="filters.start_date" type="date" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all text-white" />
             </div>
             <div>
               <label class="block text-sm font-medium text-neutral-300 mb-2">Data Fine</label>
-              <input v-model="filters.end_date" type="date" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white" />
+              <input v-model="filters.end_date" type="date" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all text-white" />
             </div>
           </div>
           <div class="flex flex-col sm:flex-row gap-3 md:gap-4 mt-4">
@@ -64,12 +64,12 @@
                 <span class="text-xs text-neutral-400 mb-1 block">{{ formatDate(transaction.date) }}</span>
                 <span 
                   class="inline-block px-2 py-1 rounded text-xs font-semibold mb-2"
-                  :class="transaction.type === 'income' ? 'bg-success-light/20 text-success-light' : 'bg-error-light/20 text-error-light'"
+                  :class="transaction.type === 'income' ? 'bg-success/20 text-success' : 'bg-error/20 text-error'"
                 >
                   {{ transaction.type === 'income' ? 'Entrata' : 'Spesa' }}
                 </span>
               </div>
-              <p class="text-lg font-bold" :class="transaction.type === 'income' ? 'text-success-light' : 'text-error-light'">
+              <p class="text-lg font-bold" :class="transaction.type === 'income' ? 'text-success' : 'text-error'">
                 {{ transaction.type === 'income' ? '+' : '-' }}€ {{ formatNumber(transaction.amount) }}
               </p>
             </div>
@@ -79,10 +79,10 @@
               <span class="text-xs text-neutral-400">{{ getRecurringLabel(transaction.recurring_rule) }}</span>
             </div>
             <div class="flex gap-2 mt-3 pt-3 border-t border-neutral-600">
-              <button @click="openEditModal(transaction)" class="flex-1 bg-accent-blue/20 hover:bg-accent-blue/30 text-accent-blue-light px-3 py-2 rounded text-sm font-medium transition-colors">
+              <button @click="openEditModal(transaction)" class="flex-1 bg-primary/20 hover:bg-primary/30 text-secondary px-3 py-2 rounded-lg text-sm font-medium transition-all">
                 Modifica
               </button>
-              <button @click="deleteTransaction(transaction.id)" class="flex-1 bg-error-light/20 hover:bg-error-light/30 text-error-light px-3 py-2 rounded text-sm font-medium transition-colors">
+              <button @click="deleteTransaction(transaction.id)" class="flex-1 bg-error/20 hover:bg-error/30 text-error px-3 py-2 rounded-lg text-sm font-medium transition-all">
                 Elimina
               </button>
             </div>
@@ -113,7 +113,7 @@
                 <td class="py-3 px-4">
                   <span 
                     class="px-2 py-1 rounded text-xs font-semibold"
-                    :class="transaction.type === 'income' ? 'bg-success-light/20 text-success-light' : 'bg-error-light/20 text-error-light'"
+                    :class="transaction.type === 'income' ? 'bg-success/20 text-success' : 'bg-error/20 text-error'"
                   >
                     {{ transaction.type === 'income' ? 'Entrata' : 'Spesa' }}
                   </span>
@@ -125,17 +125,17 @@
                     {{ getRecurringLabel(transaction.recurring_rule) }}
                   </span>
                 </td>
-                <td class="py-3 px-4 text-right font-bold text-sm" :class="transaction.type === 'income' ? 'text-success-light' : 'text-error-light'">
+                <td class="py-3 px-4 text-right font-bold text-sm" :class="transaction.type === 'income' ? 'text-success' : 'text-error'">
                   {{ transaction.type === 'income' ? '+' : '-' }}€ {{ formatNumber(transaction.amount) }}
                 </td>
                 <td class="py-3 px-4">
                   <div class="flex justify-center gap-2">
-                    <button @click="openEditModal(transaction)" class="text-accent-blue hover:text-accent-blue-dark p-1.5 rounded hover:bg-accent-blue/10 transition-colors" title="Modifica">
+                    <button @click="openEditModal(transaction)" class="text-primary hover:text-primary-dark p-1.5 rounded-lg hover:bg-primary/10 transition-all" title="Modifica">
                       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                       </svg>
                     </button>
-                    <button @click="deleteTransaction(transaction.id)" class="text-error hover:text-error-dark p-1.5 rounded hover:bg-error-light/10 transition-colors" title="Elimina">
+                    <button @click="deleteTransaction(transaction.id)" class="text-error hover:text-error-dark p-1.5 rounded-lg hover:bg-error/10 transition-all" title="Elimina">
                       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                       </svg>
@@ -154,7 +154,7 @@
             :key="page"
             @click="goToPage(page)"
             class="px-4 py-2 rounded"
-            :class="page === pagination.page ? 'bg-accent-blue text-white' : 'bg-neutral-700/50 hover:bg-neutral-700 text-neutral-300 border border-neutral-600'"
+            :class="page === pagination.page ? 'bg-primary text-white' : 'bg-neutral-700/50 hover:bg-neutral-700 text-neutral-300 border border-neutral-600'"
           >
             {{ page }}
           </button>
@@ -180,7 +180,7 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
             <div>
               <label class="block text-sm font-medium text-neutral-300 mb-2">Tipo *</label>
-              <select v-model="formData.type" required class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white">
+              <select v-model="formData.type" required class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all text-white">
                 <option value="income" class="bg-neutral-800">Entrata</option>
                 <option value="expense" class="bg-neutral-800">Spesa</option>
               </select>
@@ -193,7 +193,7 @@
                 type="number" 
                 step="0.01" 
                 required 
-                class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white placeholder-neutral-400"
+                class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all text-white placeholder-neutral-400"
                 placeholder="0.00"
               />
             </div>
@@ -204,13 +204,13 @@
                 v-model="formData.date" 
                 type="date" 
                 required 
-                class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white"
+                class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all text-white"
               />
             </div>
 
             <div>
               <label class="block text-sm font-medium text-neutral-300 mb-2">Categoria</label>
-              <select v-model="formData.category_id" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white">
+              <select v-model="formData.category_id" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all text-white">
                 <option value="" class="bg-neutral-800">Nessuna</option>
                 <option 
                   v-for="cat in filteredCategories" 
@@ -225,7 +225,7 @@
 
             <div>
               <label class="block text-sm font-medium text-neutral-300 mb-2">Ricorrenza</label>
-              <select v-model="formData.recurring_rule" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white">
+              <select v-model="formData.recurring_rule" class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all text-white">
                 <option value="single" class="bg-neutral-800">Singola</option>
                 <option value="daily" class="bg-neutral-800">Giornaliera</option>
                 <option value="weekly" class="bg-neutral-800">Settimanale</option>
@@ -239,7 +239,7 @@
               <input 
                 v-model="formData.currency" 
                 type="text" 
-                class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white placeholder-neutral-400"
+                class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all text-white placeholder-neutral-400"
                 placeholder="EUR"
               />
             </div>
@@ -247,9 +247,9 @@
 
           <div>
             <label class="block text-sm font-medium text-neutral-300 mb-2">Descrizione</label>
-            <textarea 
+              <textarea 
               v-model="formData.description" 
-              class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-all text-white placeholder-neutral-400"
+              class="w-full px-4 py-2.5 bg-neutral-700/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all text-white placeholder-neutral-400"
               rows="3"
               placeholder="Descrizione opzionale..."
             ></textarea>
