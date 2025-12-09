@@ -18,6 +18,11 @@ const routes = [
     component: () => import('../views/RegisterPage.vue')
   },
   {
+    path: '/verify-email',
+    name: 'VerifyEmail',
+    component: () => import('../views/VerifyEmailPage.vue')
+  },
+  {
     path: '/dashboard',
     name: 'Dashboard',
     component: () => import('../views/DashboardPage.vue'),

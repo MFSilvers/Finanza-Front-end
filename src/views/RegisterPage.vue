@@ -116,12 +116,17 @@ const handleRegister = async () => {
   error.value = null
 
   try {
-    await authStore.register({
+    const response = await authStore.register({
       name: formData.value.name,
       email: formData.value.email,
       password: formData.value.password
     })
-    router.push('/dashboard')
+    
+    if (response?.requires_verification) {
+      router.push({ path: '/verify-email', query: { email: formData.value.email } })
+    } else {
+      router.push('/dashboard')
+    }
   } catch (err) {
     error.value = err.response?.data?.error || 'Errore durante la registrazione'
   } finally {
